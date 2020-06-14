@@ -1,12 +1,12 @@
-package golden_ratio.darkzek.com;
+package golden_ratio.darkzek.com.formula;
 
 import javafx.scene.paint.Color;
 
 public class Point {
-    double x = 0;
-    double y = 0;
-    double size = 10;
-    Color color = Color.BLACK;
+    public double x = 0;
+    public double y = 0;
+    public double size = 10;
+    public Color color = Color.BLACK;
 
     public Point (double x, double y) {
         this.x = x;

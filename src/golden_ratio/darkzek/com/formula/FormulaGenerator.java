@@ -1,4 +1,8 @@
-package golden_ratio.darkzek.com;
+package golden_ratio.darkzek.com.formula;
+
+import golden_ratio.darkzek.com.Helper;
+import golden_ratio.darkzek.com.Settings;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -9,9 +13,7 @@ import java.util.ArrayList;
 
 public class FormulaGenerator {
 
-    private double distancePerRotation = 0.0;
-    private double rotationPerStep = 0.0;
-    private int steps = 0;
+    private Settings settings;
 
     private double centerX = 0.0;
     private double centerY = 0.0;
@@ -28,19 +30,24 @@ public class FormulaGenerator {
         ArrayList<Point> points = new ArrayList<Point>();
 
         double currentAngle = 0;
+        double currentSize = settings.defaultSize;
 
-        for (int i = 0; i < steps; i++) {
+        for (int i = 0; i < settings.points; i++) {
 
-            double distanceFromCenter = i * distancePerRotation;
+            double distanceFromCenter = i * settings.distancePerRotation;
 
             double pointX = (Math.cos(currentAngle) * distanceFromCenter) + centerX;
             double pointY = (Math.sin(currentAngle) * distanceFromCenter) + centerY;
 
-            points.add(new Point(pointX, pointY));
+            Color color = Helper.lerpColor(settings.startColor, settings.endColor, ((double) i ) / settings.points);
+
+            points.add(new Point(pointX, pointY, currentSize, color));
 
             // Add current angle but reset at 360
-            currentAngle += rotationPerStep;
+            currentAngle += settings.rotationPerPoint;
             currentAngle %= 360;
+
+            currentSize += settings.sizeIncreasePerPoint;
         }
 
         Point[] pointsOut = new Point[points.size()];
@@ -48,30 +55,6 @@ public class FormulaGenerator {
 
 
         return pointsOut;
-    }
-
-    public double getDistancePerRotation() {
-        return distancePerRotation;
-    }
-
-    public void setDistancePerRotation(double distancePerRotation) {
-        this.distancePerRotation = distancePerRotation;
-    }
-
-    public double getRotationPerStep() {
-        return rotationPerStep;
-    }
-
-    public void setRotationPerStep(double rotationPerStep) {
-        this.rotationPerStep = rotationPerStep;
-    }
-
-    public int getSteps() {
-        return steps;
-    }
-
-    public void setSteps(int steps) {
-        this.steps = steps;
     }
 
     public double getCenterX() {
@@ -88,5 +71,9 @@ public class FormulaGenerator {
 
     public void setCenterY(double centerY) {
         this.centerY = centerY;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 }

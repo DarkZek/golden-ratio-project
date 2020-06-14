@@ -3,6 +3,9 @@
 Golden ratio viewer is a program based on JavaFX with the aim of visualizing the golden ratio, as well as other ratios in an easy to understand way.
 This project is made for my 2020 Computer Science Course.
 
+
+![Recording of app](https://raw.githubusercontent.com/DarkZek/golden-ratio-project/master/research/preview.gif)
+
 ## Installation
 
 Golden Ratio viewer depends on JavaFX, and I recommend using Intellij with it to simplify things. If you used Intellij it is as simple as opening the project files in Intellij - making sure you have Intellij's built in JDK as your selected JDK.
