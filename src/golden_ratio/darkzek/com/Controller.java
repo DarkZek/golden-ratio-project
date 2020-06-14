@@ -1,12 +1,7 @@
 package golden_ratio.darkzek.com;
 
-import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
-
-import java.net.URL;
 
 public class Controller {
 
@@ -16,12 +11,32 @@ public class Controller {
 
     private Point[] points;
 
+    /**
+     * Initializes the controller, it's main goal is to setup the formula, load the settings, setup the canvas and then display the first render of the points onto the canvas.
+     */
+
     public void initialize() {
 
         canvas.setWidth(500);
         canvas.setHeight(500);
 
-        // Setup formula
+        // Sets up the formula with some decent defaults
+        // TODO: Get this to load from settings
+        setupFormula();
+
+        GraphicsContext context = canvas.getGraphicsContext2D();
+
+        points = formulaGenerator.calculatePoints();
+
+        drawPoints(context);
+
+    }
+
+    /**
+     * Sets up the formula with some defaults
+     */
+
+    private void setupFormula() {
         formulaGenerator = new FormulaGenerator();
 
         formulaGenerator.setCenterY(canvas.getHeight() / 2.0);
@@ -30,22 +45,12 @@ public class Controller {
         formulaGenerator.setSteps(40);
         formulaGenerator.setDistancePerRotation(5);
         formulaGenerator.setRotationPerStep(2);
-
-        GraphicsContext context = canvas.getGraphicsContext2D();
-
-        context.setFill(Color.RED);
-        context.setStroke(Color.BLUE);
-        context.setLineWidth(5);
-
-        context.fillRect(-75, -75, 100, 100);
-
-        System.out.println("REEE");
-
-        points = formulaGenerator.calculatePoints();
-
-        drawPoints(context);
-
     }
+
+    /**
+     * To be replaced with a drawing class soon
+     * @param context The context on which to draw
+     */
 
     public void drawPoints(GraphicsContext context) {
         for (Point point : points) {

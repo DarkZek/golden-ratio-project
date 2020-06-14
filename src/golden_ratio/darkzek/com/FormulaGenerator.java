@@ -2,6 +2,11 @@ package golden_ratio.darkzek.com;
 
 import java.util.ArrayList;
 
+/**
+ * Formula Generator is a Builder class that takes in variables and then outputs a list of Points.
+ * It also interacts with the FormulaInterpolator to get interpolated between for smooth effects.
+ */
+
 public class FormulaGenerator {
 
     private double distancePerRotation = 0.0;
@@ -12,6 +17,11 @@ public class FormulaGenerator {
     private double centerY = 0.0;
 
     public FormulaGenerator() {}
+
+    /**
+     * Calculate points takes in all of the variables that have been set in the Formula Generator and calculates a list of points using the formula.
+     * @return
+     */
 
     public Point[] calculatePoints() {
 
