@@ -14,7 +14,7 @@ import java.nio.file.Path;
  * It also features loading and saving function to make it persistant between restarts
  */
 
-public class Settings {
+public class Settings implements Cloneable {
     public double distancePerRotation = 1;
     public double rotationPerPoint = 1;
     public int points = 100;
@@ -135,6 +135,15 @@ public class Settings {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Settings do_clone() {
+        try {
+            return (Settings) this.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 

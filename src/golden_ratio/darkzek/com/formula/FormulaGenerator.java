@@ -27,7 +27,7 @@ public class FormulaGenerator {
 
     public Point[] calculatePoints() {
 
-        ArrayList<Point> points = new ArrayList<Point>();
+        ArrayList<Point> points = new ArrayList();
 
         double currentAngle = 0;
         double currentSize = settings.defaultSize;
@@ -39,13 +39,22 @@ public class FormulaGenerator {
             double pointX = (Math.cos(currentAngle) * distanceFromCenter) + centerX;
             double pointY = (Math.sin(currentAngle) * distanceFromCenter) + centerY;
 
+            pointY = (centerY * 2) - pointY;
+
             Color color = Helper.lerpColor(settings.startColor, settings.endColor, ((double) i ) / settings.points);
 
             points.add(new Point(pointX, pointY, currentSize, color));
 
             // Add current angle but reset at 360
-            currentAngle += settings.rotationPerPoint;
-            currentAngle %= 360;
+            if (settings.rotationType == RotationType.Radians) {
+                currentAngle += (Math.PI * 2) * settings.rotationPerPoint;
+                currentAngle %= Math.PI * 2;
+            } else {
+                // Convert degrees to radians
+                double radians = (Math.PI * 2) * (settings.rotationPerPoint * (Math.PI / 180));
+                currentAngle += radians;
+                currentAngle %= Math.PI * 2;
+            }
 
             currentSize += settings.sizeIncreasePerPoint;
         }
