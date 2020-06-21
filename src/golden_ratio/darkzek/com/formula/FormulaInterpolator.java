@@ -3,6 +3,7 @@ package golden_ratio.darkzek.com.formula;
 import golden_ratio.darkzek.com.Helper;
 import golden_ratio.darkzek.com.Settings;
 import golden_ratio.darkzek.com.ui.Drawing;
+import javafx.application.Platform;
 import javafx.scene.paint.Color;
 
 import java.util.Timer;
@@ -26,29 +27,35 @@ public class FormulaInterpolator extends TimerTask {
 
         timer = new Timer();
 
-        //timer.scheduleAtFixedRate(this, 0, 1000 / fps);
+        timer.scheduleAtFixedRate(this, 0, 1000 / fps);
     }
 
     @Override
     public void run() {
 
-        // This is ran every frame so if the fps is 30 a (1/30) animation speed will take 1 second to complete
-        double animationSpeed = 1.0 / 1000.0;
+        // Run in UI thread
+        Platform.runLater(() -> {
 
-        // Because of the high cost of if statements it's actually faster to just perform this calculation regardless of it the field actually changed
+            // This is ran every frame so if the fps is 30 a (1/30) animation speed will take 1 second to complete
+            double animationSpeed = 1.0 / 1000.0;
 
-        appliedSettings.rotationPerPoint += (appliedSettings.rotationPerPoint - targetSettings.rotationPerPoint) * animationSpeed;
-        appliedSettings.points += (appliedSettings.points - targetSettings.points) * animationSpeed;
-        appliedSettings.distancePerRotation += (appliedSettings.distancePerRotation - targetSettings.distancePerRotation) * animationSpeed;
-        appliedSettings.sizeIncreasePerPoint += (appliedSettings.sizeIncreasePerPoint - targetSettings.sizeIncreasePerPoint) * animationSpeed;
-        appliedSettings.defaultSize += (appliedSettings.defaultSize - targetSettings.defaultSize) * animationSpeed;
-        appliedSettings.startColor = Helper.lerpColor(appliedSettings.startColor, targetSettings.startColor, animationSpeed);
-        appliedSettings.endColor = Helper.lerpColor(appliedSettings.endColor, targetSettings.endColor, animationSpeed);
+            // Because of the high cost of if statements it's actually faster to just perform this calculation regardless of it the field actually changed
 
-        drawing.updateCanvas();
+            appliedSettings.rotationPerPoint += (appliedSettings.rotationPerPoint - targetSettings.rotationPerPoint) * animationSpeed;
+            appliedSettings.points += (appliedSettings.points - targetSettings.points) * animationSpeed;
+            appliedSettings.distancePerRotation += (appliedSettings.distancePerRotation - targetSettings.distancePerRotation) * animationSpeed;
+            appliedSettings.sizeIncreasePerPoint += (appliedSettings.sizeIncreasePerPoint - targetSettings.sizeIncreasePerPoint) * animationSpeed;
+            appliedSettings.defaultSize += (appliedSettings.defaultSize - targetSettings.defaultSize) * animationSpeed;
+            appliedSettings.startColor = Helper.lerpColor(appliedSettings.startColor, targetSettings.startColor, animationSpeed);
+            appliedSettings.endColor = Helper.lerpColor(appliedSettings.endColor, targetSettings.endColor, animationSpeed);
+
+            drawing.updateCanvas();
+
+        });
     }
 
     public void drop() {
         timer.cancel();
+        timer.purge();
     }
 }

@@ -38,11 +38,7 @@ public class Controller {
     }
 
     public void stop() {
-
-    }
-
-    public void shutdown() {
-        System.out.println("test");
+        // Stop the interpolator thread
         interpolator.drop();
     }
 }

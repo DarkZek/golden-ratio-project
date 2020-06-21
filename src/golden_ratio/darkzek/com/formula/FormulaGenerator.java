@@ -66,16 +66,8 @@ public class FormulaGenerator {
         return pointsOut;
     }
 
-    public double getCenterX() {
-        return centerX;
-    }
-
     public void setCenterX(double centerX) {
         this.centerX = centerX;
-    }
-
-    public double getCenterY() {
-        return centerY;
     }
 
     public void setCenterY(double centerY) {
