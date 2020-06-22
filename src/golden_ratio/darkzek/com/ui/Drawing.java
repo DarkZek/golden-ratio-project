@@ -59,4 +59,14 @@ public class Drawing {
 
         drawPoints(context);
     }
+
+    public void resized(double width, double height) {
+        formulaGenerator.setCenterY(height / 2.0);
+        formulaGenerator.setCenterX(width / 2.0);
+
+        canvas.setWidth(width);
+        canvas.setHeight(height);
+
+        updateCanvas();
+    }
 }

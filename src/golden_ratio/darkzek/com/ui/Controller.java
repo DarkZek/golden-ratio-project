@@ -5,11 +5,16 @@ import golden_ratio.darkzek.com.Settings;
 import golden_ratio.darkzek.com.formula.FormulaGenerator;
 import golden_ratio.darkzek.com.formula.FormulaInterpolator;
 import golden_ratio.darkzek.com.formula.Point;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.AnchorPane;
 
 public class Controller {
 
     public Canvas canvas;
+
+    public AnchorPane canvas_pane;
 
     private FormulaInterpolator interpolator;
 
@@ -35,6 +40,12 @@ public class Controller {
         settings.save();
 
         drawing.updateCanvas();
+
+        ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->
+                drawing.resized(canvas_pane.getWidth(), canvas_pane.getHeight());
+
+        canvas_pane.widthProperty().addListener(stageSizeListener);
+        canvas_pane.heightProperty().addListener(stageSizeListener);
     }
 
     public void stop() {

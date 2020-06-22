@@ -17,7 +17,7 @@ public class Main extends Application {
 
         Parent root = loader.load();
         primaryStage.setTitle("Golden Ratio Viewer");
-        Scene scene = new Scene(root, 500, 500);
+        Scene scene = new Scene(root, 700, 500);
         primaryStage.setScene(scene);
         scene.getStylesheets().add(Controller.class.getResource("styles.css").toExternalForm());
         primaryStage.show();
