@@ -7,8 +7,12 @@ import golden_ratio.darkzek.com.formula.FormulaInterpolator;
 import golden_ratio.darkzek.com.formula.Point;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
+
+import static golden_ratio.darkzek.com.Helper.clampToPositive;
 
 public class Controller {
 
@@ -46,6 +50,14 @@ public class Controller {
 
         canvas_pane.widthProperty().addListener(stageSizeListener);
         canvas_pane.heightProperty().addListener(stageSizeListener);
+
+        canvas.setOnScroll(scrollEvent -> {
+
+            double change = scrollEvent.getDeltaY() * 0.001;
+
+            this.interpolator.targetSettings.distancePerRotation = clampToPositive(change + this.interpolator.targetSettings.distancePerRotation);
+
+        });
     }
 
     public void stop() {

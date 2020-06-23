@@ -9,6 +9,9 @@ import javafx.scene.paint.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static golden_ratio.darkzek.com.Helper.lerp;
+import static golden_ratio.darkzek.com.Helper.lerpInt;
+
 public class FormulaInterpolator extends TimerTask {
     public Settings appliedSettings;
     public Settings targetSettings;
@@ -37,17 +40,17 @@ public class FormulaInterpolator extends TimerTask {
         Platform.runLater(() -> {
 
             // This is ran every frame so if the fps is 30 a (1/30) animation speed will take 1 second to complete
-            double animationSpeed = 1.0 / 1000.0;
+            double animationSpeed = 1.0 / 30.0;
 
             // Because of the high cost of if statements it's actually faster to just perform this calculation regardless of it the field actually changed
 
-            appliedSettings.rotationPerPoint += (appliedSettings.rotationPerPoint - targetSettings.rotationPerPoint) * animationSpeed;
-            appliedSettings.points += (appliedSettings.points - targetSettings.points) * animationSpeed;
-            appliedSettings.distancePerRotation += (appliedSettings.distancePerRotation - targetSettings.distancePerRotation) * animationSpeed;
-            appliedSettings.sizeIncreasePerPoint += (appliedSettings.sizeIncreasePerPoint - targetSettings.sizeIncreasePerPoint) * animationSpeed;
-            appliedSettings.defaultSize += (appliedSettings.defaultSize - targetSettings.defaultSize) * animationSpeed;
-            appliedSettings.startColor = Helper.lerpColor(appliedSettings.startColor, targetSettings.startColor, animationSpeed);
-            appliedSettings.endColor = Helper.lerpColor(appliedSettings.endColor, targetSettings.endColor, animationSpeed);
+            appliedSettings.rotationPerPoint        = lerp(appliedSettings.rotationPerPoint, targetSettings.rotationPerPoint, animationSpeed);
+            //appliedSettings.points                  = lerpInt(appliedSettings.points, targetSettings.points, animationSpeed);
+            appliedSettings.distancePerRotation     = lerp(appliedSettings.distancePerRotation, targetSettings.distancePerRotation, animationSpeed);
+            appliedSettings.sizeIncreasePerPoint    = lerp(appliedSettings.sizeIncreasePerPoint, targetSettings.sizeIncreasePerPoint, animationSpeed);
+            appliedSettings.defaultSize             = lerp(appliedSettings.defaultSize, targetSettings.defaultSize, animationSpeed);
+            appliedSettings.startColor              = Helper.lerpColor(appliedSettings.startColor, targetSettings.startColor, animationSpeed);
+            appliedSettings.endColor                = Helper.lerpColor(appliedSettings.endColor, targetSettings.endColor, animationSpeed);
 
             drawing.updateCanvas();
 

@@ -5,35 +5,26 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" minHeight="500.0" minWidth="700.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="golden_ratio.darkzek.com.ui.Controller">
-   <columnConstraints>
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-   </rowConstraints>
-   <children>
-      <SplitPane dividerPositions="0.29797979797979796" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
-        <items>
-          <AnchorPane fx:id="canvas_pane" minHeight="500.0" minWidth="500.0" prefHeight="500.0" prefWidth="500.0">
-               <children>
-                  <Canvas fx:id="canvas" height="500.0" width="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-               </children>
-            </AnchorPane>
-          <AnchorPane minHeight="400.0" minWidth="150.0" prefHeight="500.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
-               <children>
-                  <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefHeight="500.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <content>
-                      <AnchorPane minHeight="0.0" prefHeight="295.0" prefWidth="346.0">
-                           <children>
-                              <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" />
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </ScrollPane>
-               </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
-   </children>
-</GridPane>
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #4e4e4e;" styleClass="split" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="golden_ratio.darkzek.com.ui.Controller">
+<items>
+  <AnchorPane fx:id="canvas_pane" minHeight="500.0" minWidth="500.0" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: white;">
+       <children>
+          <Canvas fx:id="canvas" height="500.0" styleClass="canvas" width="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+       </children>
+    </AnchorPane>
+  <AnchorPane minHeight="400.0" minWidth="150.0" prefHeight="500.0" prefWidth="200.0" style="-fx-border-color: #4e4e4e;" SplitPane.resizableWithParent="false">
+       <children>
+          <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefHeight="500.0" prefWidth="200.0" style="-fx-border-color: #4e4e4e; -fx-background-color: #4e4e4e;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="200.0" style="-fx-background-color: #4e4e4e; -fx-border-color: #4e4e4e;" styleClass="settings">
+                   <children>
+                      <Text fill="WHITE" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" />
+                      <Pane layoutX="14.0" layoutY="39.0" prefHeight="52.0" prefWidth="170.0" style="-fx-background-color: #5a5a5a; -fx-border-radius: 50 50 50 50; -fx-border-color: #5a5a5a; -fx-background-radius: 5 5 5 5;" />
+                   </children>
+                </AnchorPane>
+            </content>
+          </ScrollPane>
+       </children>
+    </AnchorPane>
+</items>
+</SplitPane>

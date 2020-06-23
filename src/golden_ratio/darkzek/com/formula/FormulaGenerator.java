@@ -48,13 +48,12 @@ public class FormulaGenerator {
             // Add current angle but reset at 360
             if (settings.rotationType == RotationType.Radians) {
                 currentAngle += (Math.PI * 2) * settings.rotationPerPoint;
-                currentAngle %= Math.PI * 2;
             } else {
                 // Convert degrees to radians
                 double radians = (Math.PI * 2) * (settings.rotationPerPoint * (Math.PI / 180));
                 currentAngle += radians;
-                currentAngle %= Math.PI * 2;
             }
+            currentAngle %= Math.PI * 2;
 
             currentSize += settings.sizeIncreasePerPoint;
         }

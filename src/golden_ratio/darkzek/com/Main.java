@@ -19,11 +19,8 @@ public class Main extends Application {
         primaryStage.setTitle("Golden Ratio Viewer");
         Scene scene = new Scene(root, 700, 500);
         primaryStage.setScene(scene);
-        scene.getStylesheets().add(Controller.class.getResource("styles.css").toExternalForm());
         primaryStage.show();
-
-
-
+        
     }
 
     @Override
