@@ -22,8 +22,9 @@ public class Helper {
         }
     }
 
-    public static double lerp(double a, double b, double f)
+    public static double lerp(double a, double b, double f, double min_change)
     {
+        if (Math.abs(a - b) < min_change) { return b; }
         return a + f * (b - a);
     }
 
