@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 
 public class Helper {
     public static Color lerpColor(Color color1, Color color2, double i) {
-        double r, g, b, a = 0.0;
+        double r, g, b, a;
 
         r = (color1.getRed() * i) + (color2.getRed() * ( 1 - i));
         g = (color1.getGreen() * i) + (color2.getGreen() * ( 1 - i));
@@ -20,6 +20,12 @@ public class Helper {
         } else {
             return n;
         }
+    }
+
+    public static double clamp(double n, double floor, double ceil) {
+        if (n < floor) {
+            return floor;
+        } else return Math.min(n, ceil);
     }
 
     public static double lerp(double a, double b, double f, double min_change)

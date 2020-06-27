@@ -15,6 +15,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
+import static golden_ratio.darkzek.com.Helper.clamp;
 import static golden_ratio.darkzek.com.Helper.clampToPositive;
 
 public class Controller {
@@ -73,20 +74,29 @@ public class Controller {
         rotation_per_step_slider.valueProperty().addListener((observableValue, number, t1) -> {
             if (!this.interpolator.interpolating) {
                 this.interpolator.targetSettings.rotationPerPoint = number.floatValue();
-                System.out.println("Test");
             }
         });
 
         rotation_per_step_field.setText(settings.rotationPerPoint + "");
     }
 
-    public void onEnter(ActionEvent e) throws ParseException {
-        double value = NumberFormat.getInstance(Locale.ENGLISH).parse(rotation_per_step_field.getText()).doubleValue();
-        interpolator.appliedSettings.rotationPerPoint = value;
-        interpolator.targetSettings.rotationPerPoint = value;
-        interpolator.updateAll = true;
-        interpolator.interpolating = true;
-        rotation_per_step_slider.adjustValue(value);
+    public void onEnter(ActionEvent e) {
+        try {
+            double value = NumberFormat.getInstance(Locale.ENGLISH).parse(rotation_per_step_field.getText()).doubleValue();
+
+            value = clamp(value, 0, Math.PI * 2);
+
+            interpolator.appliedSettings.rotationPerPoint = value;
+            interpolator.targetSettings.rotationPerPoint = value;
+            interpolator.updateAll = true;
+            interpolator.interpolating = true;
+            rotation_per_step_slider.adjustValue(value);
+            rotation_per_step_field.setText(value + "");
+        } catch (ParseException _e) {
+            // There was an error parsing
+            System.out.println("[ERROR] Error parsing text input for Rotation Per Step '" + rotation_per_step_field.getText() + "'");
+            rotation_per_step_field.setText(interpolator.targetSettings.rotationPerPoint + "");
+        }
 
     }
 

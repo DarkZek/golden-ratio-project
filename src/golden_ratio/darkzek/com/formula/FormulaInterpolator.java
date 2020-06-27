@@ -56,7 +56,6 @@ public class FormulaInterpolator extends TimerTask {
                 interpolating = false;
             }
 
-            //appliedSettings.points                  = lerpInt(appliedSettings.points, targetSettings.points, animationSpeed);
             appliedSettings.distancePerRotation     = lerp(appliedSettings.distancePerRotation, targetSettings.distancePerRotation, animationSpeed, 0.001);
             appliedSettings.sizeIncreasePerPoint    = lerp(appliedSettings.sizeIncreasePerPoint, targetSettings.sizeIncreasePerPoint, animationSpeed, 0.001);
             appliedSettings.defaultSize             = lerp(appliedSettings.defaultSize, targetSettings.defaultSize, animationSpeed, 0.001);

@@ -61,7 +61,6 @@ public class FormulaGenerator {
         Point[] pointsOut = new Point[points.size()];
         pointsOut = points.toArray(pointsOut);
 
-
         return pointsOut;
     }
 
