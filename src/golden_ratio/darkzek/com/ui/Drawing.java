@@ -9,6 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 public class Drawing {
 
     private Canvas canvas;
+    private GraphicsContext context;
 
     private FormulaGenerator formulaGenerator;
 
@@ -16,6 +17,7 @@ public class Drawing {
 
     public Drawing(Canvas canvas, Settings settings) {
         this.canvas = canvas;
+        context = canvas.getGraphicsContext2D();
 
         this.setupFormula(settings);
     }
@@ -53,7 +55,6 @@ public class Drawing {
      */
 
     public void updateCanvas() {
-        GraphicsContext context = canvas.getGraphicsContext2D();
 
         points = formulaGenerator.calculatePoints();
 
