@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.8311258278145696" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #4e4e4e;" styleClass="split" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="golden_ratio.darkzek.com.ui.Controller">
+<SplitPane dividerPositions="0.8253311258278145" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #4e4e4e;" styleClass="split" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="golden_ratio.darkzek.com.ui.Controller">
 <items>
   <AnchorPane fx:id="canvas_pane" minHeight="500.0" minWidth="500.0" prefHeight="1000.0" prefWidth="1000.0" style="-fx-background-color: white;">
        <children>
@@ -15,9 +15,9 @@
     </AnchorPane>
   <AnchorPane maxWidth="500.0" minHeight="400.0" minWidth="200.0" prefHeight="500.0" prefWidth="200.0" style="-fx-border-color: #4e4e4e;" SplitPane.resizableWithParent="false">
        <children>
-            <ScrollPane id="settings_panel" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="3.0" layoutY="3.0" minWidth="200.0" prefHeight="496.0" prefWidth="128.0" style="-fx-background: #4e4e4e; -fx-border-color: #4e4e4e;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <ScrollPane id="settings_panel" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutX="7.0" layoutY="12.0" minWidth="174.0" prefHeight="957.0" prefWidth="189.0" style="-fx-background: #4e4e4e; -fx-border-color: #4e4e4e;" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="11.0">
                <content>
-                  <VBox fx:id="settings_list" minWidth="180.0" prefHeight="974.0" prefWidth="188.0" spacing="12">
+                  <VBox fx:id="settings_list" minWidth="180.0" prefHeight="974.0" prefWidth="224.0" spacing="12">
                      <children>
                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" />
                          <Pane minWidth="40.0" prefHeight="83.0" prefWidth="163.0" style="-fx-background-color: #5a5a5a; -fx-border-radius: 50 50 50 50; -fx-border-color: #5a5a5a; -fx-background-radius: 5 5 5 5;">
