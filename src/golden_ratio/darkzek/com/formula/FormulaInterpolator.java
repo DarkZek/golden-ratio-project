@@ -30,6 +30,7 @@ public class FormulaInterpolator extends TimerTask {
 
     // Doesn't schedule new frame until old one is done
     public boolean drewFrame = false;
+    public boolean scrollingInterpolation = false;
 
     public FormulaInterpolator(Controller controller, Drawing drawing, Settings settings) {
 
@@ -37,7 +38,6 @@ public class FormulaInterpolator extends TimerTask {
         this.drawing = drawing;
         this.appliedSettings = settings;
         this.targetSettings = appliedSettings.do_clone();
-        this.targetSettings.startColor = Color.GREEN;
 
         timer = new Timer();
 
@@ -84,7 +84,7 @@ public class FormulaInterpolator extends TimerTask {
                 appliedSettings.sizeIncreasePerPoint = lerp(appliedSettings.sizeIncreasePerPoint, targetSettings.sizeIncreasePerPoint, animationSpeed, 0.001);
             }
             if (appliedSettings.defaultSize != targetSettings.defaultSize || updateAll) {
-                appliedSettings.defaultSize = lerp(appliedSettings.defaultSize, targetSettings.defaultSize, animationSpeed, 0.001);
+                appliedSettings.defaultSize = lerp(appliedSettings.defaultSize, targetSettings.defaultSize, animationSpeed * 100, 0.001);
             }
             if (appliedSettings.startColor != targetSettings.startColor || updateAll) {
                 appliedSettings.startColor = Helper.lerpColor(appliedSettings.startColor, targetSettings.startColor, animationSpeed);
@@ -103,5 +103,8 @@ public class FormulaInterpolator extends TimerTask {
     public void drop() {
         timer.cancel();
         timer.purge();
+
+        // Save settings
+        this.targetSettings.save();
     }
 }

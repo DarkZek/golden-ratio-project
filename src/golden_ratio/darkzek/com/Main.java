@@ -13,7 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        loader = new FXMLLoader(getClass().getResource("ui/sample.fxml"));
+        loader = new FXMLLoader(getClass().getResource("ui/window.fxml"));
 
         Parent root = loader.load();
         primaryStage.setTitle("Golden Ratio Viewer");

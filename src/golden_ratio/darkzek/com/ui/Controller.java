@@ -2,21 +2,22 @@ package golden_ratio.darkzek.com.ui;
 
 import golden_ratio.darkzek.com.Settings;
 import golden_ratio.darkzek.com.formula.FormulaInterpolator;
+import golden_ratio.darkzek.com.formula.RotationType;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
-import static golden_ratio.darkzek.com.Helper.clamp;
-import static golden_ratio.darkzek.com.Helper.clampToPositive;
+import static golden_ratio.darkzek.com.Helper.*;
 
 public class Controller {
 
@@ -27,6 +28,20 @@ public class Controller {
 
     public Slider rotation_per_step_slider;
     public TextField rotation_per_step_field;
+
+    public Slider distance_per_rotation_slider;
+
+    public TextField points_field;
+
+    public ColorPicker start_color_picker;
+    public ColorPicker end_color_picker;
+
+    public ToggleGroup measurement_setting;
+    public RadioButton measurement_radians_setting;
+    public RadioButton measurement_degrees_setting;
+
+    public Slider point_size_slider;
+    public Slider point_size_increase_slider;
 
     private FormulaInterpolator interpolator;
 
@@ -48,9 +63,6 @@ public class Controller {
         drawing = new Drawing(canvas, settings);
         interpolator = new FormulaInterpolator(this, drawing, settings);
 
-        // For testing purposes
-        settings.save();
-
         drawing.updateCanvas();
 
         ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->
@@ -59,44 +71,131 @@ public class Controller {
         canvas_pane.widthProperty().addListener(stageSizeListener);
         canvas_pane.heightProperty().addListener(stageSizeListener);
 
+        setupListeners();
+    }
+
+    public void setupListeners() {
         canvas.setOnScroll(scrollEvent -> {
 
             double change = scrollEvent.getDeltaY() * 0.001;
 
             this.interpolator.targetSettings.distancePerRotation = clampToPositive(change + this.interpolator.targetSettings.distancePerRotation);
+            distance_per_rotation_slider.setValue(this.interpolator.targetSettings.distancePerRotation);
+            this.interpolator.scrollingInterpolation = true;
 
         });
 
         // Setup settings panel
 
         rotation_per_step_slider.adjustValue(settings.rotationPerPoint);
-
-        rotation_per_step_slider.valueProperty().addListener((observableValue, number, t1) -> {
+        rotation_per_step_slider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             if (!this.interpolator.interpolating) {
-                this.interpolator.targetSettings.rotationPerPoint = number.floatValue();
+                this.interpolator.targetSettings.rotationPerPoint = newValue.floatValue();
             }
         });
 
+        distance_per_rotation_slider.setValue(this.interpolator.targetSettings.distancePerRotation);
+        distance_per_rotation_slider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+
+            if (newValue.doubleValue() == 0.01) {
+                return;
+            }
+
+            if (this.interpolator.scrollingInterpolation) {
+                this.interpolator.scrollingInterpolation = false;
+                return;
+            }
+
+            this.interpolator.targetSettings.distancePerRotation = newValue.doubleValue();
+        });
+
         rotation_per_step_field.setText(settings.rotationPerPoint + "");
-    }
+        rotation_per_step_field.setOnAction(actionEvent -> {
+            try {
+                double value = NumberFormat.getInstance(Locale.ENGLISH).parse(rotation_per_step_field.getText()).doubleValue();
 
-    public void onEnter(ActionEvent e) {
-        try {
-            double value = NumberFormat.getInstance(Locale.ENGLISH).parse(rotation_per_step_field.getText()).doubleValue();
+                double maxValue = Math.PI * 2;
+                if (interpolator.appliedSettings.rotationType == RotationType.Degrees) {
+                    maxValue = 360;
+                }
 
-            value = clamp(value, 0, Math.PI * 2);
+                value = clamp(value, 0, maxValue);
 
-            interpolator.appliedSettings.rotationPerPoint = value;
-            interpolator.targetSettings.rotationPerPoint = value;
+                interpolator.appliedSettings.rotationPerPoint = value;
+                interpolator.targetSettings.rotationPerPoint = value;
+                interpolator.updateAll = true;
+                interpolator.interpolating = true;
+                rotation_per_step_slider.adjustValue(value);
+                rotation_per_step_field.setText(value + "");
+            } catch (ParseException _e) {
+                // There was an error parsing
+                System.out.println("[ERROR] Error parsing text input for Rotation Per Step '" + rotation_per_step_field.getText() + "'");
+                rotation_per_step_field.setText(interpolator.targetSettings.rotationPerPoint + "");
+            }
+
+        });
+
+        points_field.setText(interpolator.appliedSettings.points + "");
+        points_field.setOnAction(actionEvent -> {
+            try {
+                int value = NumberFormat.getInstance(Locale.ENGLISH).parse(points_field.getText()).intValue();
+
+                value = clampInt(value, 0, 1000000);
+
+                interpolator.appliedSettings.points = value;
+                interpolator.targetSettings.points = value;
+                interpolator.updateAll = true;
+                points_field.setText(value + "");
+            } catch (ParseException _e) {
+                // There was an error parsing
+                System.out.println("[ERROR] Error parsing text input for Points Field '" + rotation_per_step_field.getText() + "'");
+                rotation_per_step_field.setText(interpolator.targetSettings.rotationPerPoint + "");
+            }
+        });
+
+        start_color_picker.getCustomColors().add(this.interpolator.appliedSettings.startColor);
+        start_color_picker.setValue(this.interpolator.appliedSettings.startColor);
+        start_color_picker.valueProperty().addListener((observableValue, color, t1) -> interpolator.targetSettings.startColor = color);
+        start_color_picker.setOnAction(actionEvent -> interpolator.targetSettings.startColor = start_color_picker.getValue());
+
+        end_color_picker.getCustomColors().add(this.interpolator.appliedSettings.endColor);
+        end_color_picker.setValue(this.interpolator.appliedSettings.endColor);
+        end_color_picker.valueProperty().addListener((observableValue, color, t1) -> interpolator.targetSettings.endColor = color);
+        end_color_picker.setOnAction(actionEvent -> interpolator.targetSettings.endColor = end_color_picker.getValue());
+
+        measurement_setting.selectedToggleProperty().addListener((observableValue, oldToggle, newToggle) -> {
+            String option = ((RadioButton) newToggle).getText();
             interpolator.updateAll = true;
-            interpolator.interpolating = true;
-            rotation_per_step_slider.adjustValue(value);
-            rotation_per_step_field.setText(value + "");
-        } catch (ParseException _e) {
-            // There was an error parsing
-            System.out.println("[ERROR] Error parsing text input for Rotation Per Step '" + rotation_per_step_field.getText() + "'");
-            rotation_per_step_field.setText(interpolator.targetSettings.rotationPerPoint + "");
+            if (option.equals("Radians")) {
+                interpolator.appliedSettings.rotationType = RotationType.Radians;
+                interpolator.targetSettings.rotationType = RotationType.Radians;
+            } else {
+                interpolator.appliedSettings.rotationType = RotationType.Degrees;
+                interpolator.targetSettings.rotationType = RotationType.Degrees;
+            }
+        });
+
+        if (interpolator.appliedSettings.rotationType == RotationType.Radians) {
+            measurement_radians_setting.setSelected(true);
+        } else {
+            measurement_degrees_setting.setSelected(true);
+
+//            // Update the distance per rotation sliders to degrees
+//            distance_per_rotation_slider.setMax(360.0);
+//            distance_per_rotation_slider.setValue(clamp(0, Math.PI, distance_per_rotation_slider.getValue()));
         }
+
+        point_size_slider.setValue(interpolator.targetSettings.defaultSize);
+        point_size_slider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            interpolator.targetSettings.defaultSize = newValue.doubleValue();
+            interpolator.updateAll = true;
+        });
+
+        point_size_increase_slider.setValue(interpolator.targetSettings.sizeIncreasePerPoint);
+        point_size_increase_slider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            interpolator.targetSettings.sizeIncreasePerPoint = newValue.doubleValue();
+            interpolator.updateAll = true;
+        });
 
     }
 

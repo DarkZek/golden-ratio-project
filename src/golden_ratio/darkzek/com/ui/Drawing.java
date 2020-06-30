@@ -33,7 +33,7 @@ public class Drawing {
 
         for (Point point : points) {
             context.setFill(point.color);
-            context.fillRoundRect(point.x, point.y, point.size, point.size, point.size, point.size);
+            context.fillRoundRect(point.x - (point.size / 2), point.y - (point.size / 2), point.size, point.size, point.size, point.size);
         }
     }
 
