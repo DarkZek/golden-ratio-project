@@ -7,10 +7,9 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 /**
- * Formula Generator is a Builder class that takes in variables and then outputs a list of Points.
- * It also interacts with the FormulaInterpolator to get interpolated between for smooth effects.
+ * Formula Generator is a class that takes in a set of Settings and then outputs a list of Points.
+ * It also gets interacted by the FormulaInterpolator which interpolates between these applied settings and some target settings to achieve smooth transitions.
  */
-
 public class FormulaGenerator {
 
     private Settings settings;
@@ -22,7 +21,7 @@ public class FormulaGenerator {
 
     /**
      * Calculate points takes in all of the variables that have been set in the Formula Generator and calculates a list of points using the formula.
-     * @return
+     * @return A list of points calculated by the Settings variable
      */
 
     public Point[] calculatePoints() {
@@ -64,11 +63,8 @@ public class FormulaGenerator {
         return pointsOut;
     }
 
-    public void setCenterX(double centerX) {
+    public void setCenter(double centerX, double centerY) {
         this.centerX = centerX;
-    }
-
-    public void setCenterY(double centerY) {
         this.centerY = centerY;
     }
 

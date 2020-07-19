@@ -52,7 +52,6 @@ public class Controller {
     /**
      * Initializes the controller, it's main goal is to setup the formula, load the settings, setup the canvas and then display the first render of the points onto the canvas.
      */
-
     public void initialize() {
 
         canvas.setWidth(500);
@@ -74,6 +73,9 @@ public class Controller {
         setupListeners();
     }
 
+    /**
+     * Sets up listeners so that the app will respond to button clicks and keyboard input.
+     */
     public void setupListeners() {
         canvas.setOnScroll(scrollEvent -> {
 

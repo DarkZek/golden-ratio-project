@@ -32,6 +32,12 @@ public class FormulaInterpolator extends TimerTask {
     public boolean drewFrame = false;
     public boolean scrollingInterpolation = false;
 
+    /**
+     * Initialises the formula controller and starts process
+     * @param controller The view controller
+     * @param drawing The drawing
+     * @param settings The default settings
+     */
     public FormulaInterpolator(Controller controller, Drawing drawing, Settings settings) {
 
         this.controller = controller;
@@ -45,6 +51,9 @@ public class FormulaInterpolator extends TimerTask {
         timer.scheduleAtFixedRate(this, 0, 1000 / FPS);
     }
 
+    /**
+     * Starts running the interpolator thread
+     */
     @Override
     public void run() {
 
@@ -100,6 +109,9 @@ public class FormulaInterpolator extends TimerTask {
         });
     }
 
+    /**
+     * Drop and stops thread
+     */
     public void drop() {
         timer.cancel();
         timer.purge();

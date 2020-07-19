@@ -137,6 +137,10 @@ public class Settings implements Cloneable {
         }
     }
 
+    /**
+     * Clones the current settings
+     * @return Returns a new copy of the settings
+     */
     public Settings do_clone() {
         try {
             return (Settings) this.clone();

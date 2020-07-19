@@ -38,14 +38,14 @@ public class Drawing {
     }
 
     /**
-     * Sets up the formula with some defaults
+     * Sets up the formula with the inputted settings
+     * @param settings The settings that the points generator should use
      */
 
     private void setupFormula(Settings settings) {
         formulaGenerator = new FormulaGenerator();
 
-        formulaGenerator.setCenterY(canvas.getHeight() / 2.0);
-        formulaGenerator.setCenterX(canvas.getWidth() / 2.0);
+        formulaGenerator.setCenter(canvas.getWidth() / 2.0, canvas.getHeight() / 2.0);
 
         formulaGenerator.setSettings(settings);
     }
@@ -53,17 +53,17 @@ public class Drawing {
     /**
      * Updates the canvas with the newest applied settings and recalculates points with those settings. Then it draws those new points to the screen
      */
-
     public void updateCanvas() {
-
         points = formulaGenerator.calculatePoints();
 
         drawPoints(context);
     }
 
+    /**
+     * Detects resize events and updates the other classes accordingly.
+     */
     public void resized(double width, double height) {
-        formulaGenerator.setCenterY(height / 2.0);
-        formulaGenerator.setCenterX(width / 2.0);
+        formulaGenerator.setCenter(width / 2.0, height / 2.0);
 
         canvas.setWidth(width);
         canvas.setHeight(height);
