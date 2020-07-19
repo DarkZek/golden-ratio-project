@@ -5,13 +5,11 @@ import golden_ratio.darkzek.com.Settings;
 import golden_ratio.darkzek.com.ui.Controller;
 import golden_ratio.darkzek.com.ui.Drawing;
 import javafx.application.Platform;
-import javafx.scene.paint.Color;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static golden_ratio.darkzek.com.Helper.lerp;
-import static golden_ratio.darkzek.com.Helper.lerpInt;
 
 public class FormulaInterpolator extends TimerTask {
     public Settings appliedSettings;

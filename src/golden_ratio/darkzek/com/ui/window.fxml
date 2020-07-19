@@ -85,6 +85,7 @@
                                  <Insets top="10.0" />
                              </padding>
                          </Pane>
+                        <Button fx:id="export_button" mnemonicParsing="false" prefHeight="26.0" prefWidth="192.0" style="-fx-background-color: #424242;" text="EXPORT" textFill="WHITE" />
                      </children>
                   </VBox>
                </content>

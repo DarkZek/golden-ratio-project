@@ -4,15 +4,20 @@ import golden_ratio.darkzek.com.Settings;
 import golden_ratio.darkzek.com.formula.FormulaInterpolator;
 import golden_ratio.darkzek.com.formula.RotationType;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
@@ -42,6 +47,8 @@ public class Controller {
 
     public Slider point_size_slider;
     public Slider point_size_increase_slider;
+
+    public Button export_button;
 
     private FormulaInterpolator interpolator;
 
@@ -199,6 +206,30 @@ public class Controller {
             interpolator.updateAll = true;
         });
 
+        export_button.setOnAction(actionEvent -> {
+
+            FileChooser fc = new FileChooser();
+            fc.setInitialDirectory(new File("./"));
+
+            fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG","*.png"));
+            fc.setTitle("Save Map");
+            fc.setInitialFileName("Drawing.png");
+
+            File file = fc.showSaveDialog(((Node) actionEvent.getSource()).getScene().getWindow());
+
+            if(file != null){
+                WritableImage wi = new WritableImage((int)canvas.getWidth(),(int)canvas.getHeight());
+                try {
+                    SnapshotParameters sp = new SnapshotParameters();
+                    sp.setFill(Color.TRANSPARENT);
+
+                    ImageIO.write(SwingFXUtils.fromFXImage(canvas.snapshot(sp, wi), null), "png", file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
     }
 
     public void stop() {
