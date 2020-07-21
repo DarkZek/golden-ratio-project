@@ -19,7 +19,18 @@
                <content>
                   <VBox fx:id="settings_list" minWidth="180.0" prefHeight="974.0" prefWidth="224.0" spacing="12">
                      <children>
-                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" />
+                        <HBox prefHeight="28.0" prefWidth="190.0">
+                           <children>
+                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin></Text>
+                               <Button fx:id="reset_button" mnemonicParsing="false" prefHeight="26.0" prefWidth="73.0" style="-fx-background-color: #424242;" text="RESET" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets left="60.0" />
+                                 </HBox.margin></Button>
+                           </children>
+                        </HBox>
                          <Pane minWidth="40.0" prefHeight="83.0" prefWidth="163.0" style="-fx-background-color: #5a5a5a; -fx-border-radius: 50 50 50 50; -fx-border-color: #5a5a5a; -fx-background-radius: 5 5 5 5;">
                              <children>
                                  <Slider fx:id="rotation_per_step_slider" blockIncrement="0.01" layoutX="1.0" layoutY="30.0" max="6.28318530718" prefHeight="15.0" prefWidth="178.0" />

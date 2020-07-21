@@ -149,5 +149,21 @@ public class Settings implements Cloneable {
         }
         return null;
     }
+
+    /**
+     * Clears the current settings and restores to factory default.
+     */
+    public void clear() {
+        distancePerRotation = 1;
+        rotationPerPoint = 1;
+        points = 100;
+        startColor = Color.BLACK;
+        endColor = Color.BLACK;
+        rotationType = RotationType.Degrees;
+        defaultSize = 10;
+        sizeIncreasePerPoint = -0.02;
+        smoothAnimation = true;
+        joinClosePoints = false;
+    }
 }
 

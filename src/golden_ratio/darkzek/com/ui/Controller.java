@@ -5,6 +5,7 @@ import golden_ratio.darkzek.com.formula.FormulaInterpolator;
 import golden_ratio.darkzek.com.formula.RotationType;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
@@ -49,6 +50,7 @@ public class Controller {
     public Slider point_size_increase_slider;
 
     public Button export_button;
+    public Button reset_button;
 
     private FormulaInterpolator interpolator;
 
@@ -141,7 +143,6 @@ public class Controller {
                 System.out.println("[ERROR] Error parsing text input for Rotation Per Step '" + rotation_per_step_field.getText() + "'");
                 rotation_per_step_field.setText(interpolator.targetSettings.rotationPerPoint + "");
             }
-
         });
 
         points_field.setText(interpolator.appliedSettings.points + "");
@@ -164,12 +165,12 @@ public class Controller {
 
         start_color_picker.getCustomColors().add(this.interpolator.appliedSettings.startColor);
         start_color_picker.setValue(this.interpolator.appliedSettings.startColor);
-        start_color_picker.valueProperty().addListener((observableValue, color, t1) -> interpolator.targetSettings.startColor = color);
+        start_color_picker.valueProperty().addListener((observableValue, t1, color) -> interpolator.targetSettings.startColor = color);
         start_color_picker.setOnAction(actionEvent -> interpolator.targetSettings.startColor = start_color_picker.getValue());
 
         end_color_picker.getCustomColors().add(this.interpolator.appliedSettings.endColor);
         end_color_picker.setValue(this.interpolator.appliedSettings.endColor);
-        end_color_picker.valueProperty().addListener((observableValue, color, t1) -> interpolator.targetSettings.endColor = color);
+        end_color_picker.valueProperty().addListener((observableValue, t1, color) -> interpolator.targetSettings.endColor = color);
         end_color_picker.setOnAction(actionEvent -> interpolator.targetSettings.endColor = end_color_picker.getValue());
 
         measurement_setting.selectedToggleProperty().addListener((observableValue, oldToggle, newToggle) -> {
@@ -207,7 +208,6 @@ public class Controller {
         });
 
         export_button.setOnAction(actionEvent -> {
-
             FileChooser fc = new FileChooser();
             fc.setInitialDirectory(new File("./"));
 
@@ -217,7 +217,7 @@ public class Controller {
 
             File file = fc.showSaveDialog(((Node) actionEvent.getSource()).getScene().getWindow());
 
-            if(file != null){
+            if (file != null) {
                 WritableImage wi = new WritableImage((int)canvas.getWidth(),(int)canvas.getHeight());
                 try {
                     SnapshotParameters sp = new SnapshotParameters();
@@ -228,6 +228,15 @@ public class Controller {
                     e.printStackTrace();
                 }
             }
+        });
+
+        reset_button.setOnAction(actionEvent -> {
+            settings.clear();
+            interpolator.appliedSettings.clear();
+            interpolator.targetSettings.clear();
+            start_color_picker.setValue(Color.BLACK);
+            end_color_picker.setValue(Color.BLACK);
+            interpolator.updateAll = true;
 
         });
     }
