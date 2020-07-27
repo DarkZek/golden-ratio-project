@@ -1,5 +1,6 @@
 package golden_ratio.darkzek.com;
 
+import golden_ratio.darkzek.com.formula.Expression;
 import golden_ratio.darkzek.com.formula.RotationType;
 import javafx.scene.paint.Color;
 
@@ -15,8 +16,8 @@ import java.nio.file.Path;
  */
 
 public class Settings implements Cloneable {
+    public Expression rotationPerPoint =  new Expression(1);
     public double distancePerRotation = 1;
-    public double rotationPerPoint = 1;
     public int points = 100;
     public Color startColor = Color.BLACK;
     public Color endColor = Color.BLACK;
@@ -55,12 +56,12 @@ public class Settings implements Cloneable {
                String value = lines[1];
 
                switch (lines[0]) {
-                   case "distance_per_rotation": {
-                       settings.distancePerRotation = Double.parseDouble(value);
+                   case "rotation_per_point": {
+                       settings.rotationPerPoint.setExpression(value);
                        break;
                    }
-                   case "rotation_per_point": {
-                       settings.rotationPerPoint = Double.parseDouble(value);
+                   case "distance_per_rotation": {
+                       settings.distancePerRotation = Double.parseDouble(value);
                        break;
                    }
                    case "points": {
@@ -111,8 +112,8 @@ public class Settings implements Cloneable {
 
     public void save() {
         String content = "# Settings configuration for Golden Ratio Viewer" + "\n";
+        content += "rotation_per_point: " + rotationPerPoint.getExpression() + "\n";
         content += "distance_per_rotation: " + distancePerRotation + "\n";
-        content += "rotation_per_point: " + rotationPerPoint + "\n";
         content += "points: " + points + "\n";
         content += "start_color: " + startColor + "\n";
         content += "end_color: " + endColor + "\n";
@@ -143,7 +144,9 @@ public class Settings implements Cloneable {
      */
     public Settings do_clone() {
         try {
-            return (Settings) this.clone();
+            Settings s = (Settings) this.clone();
+            s.rotationPerPoint = new Expression(this.rotationPerPoint.getValue());
+            return s;
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
@@ -154,8 +157,8 @@ public class Settings implements Cloneable {
      * Clears the current settings and restores to factory default.
      */
     public void clear() {
+        rotationPerPoint.setValue(1);
         distancePerRotation = 1;
-        rotationPerPoint = 1;
         points = 100;
         startColor = Color.BLACK;
         endColor = Color.BLACK;

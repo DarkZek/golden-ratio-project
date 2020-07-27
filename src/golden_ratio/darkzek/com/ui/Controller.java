@@ -1,6 +1,7 @@
 package golden_ratio.darkzek.com.ui;
 
 import golden_ratio.darkzek.com.Settings;
+import golden_ratio.darkzek.com.formula.Expression;
 import golden_ratio.darkzek.com.formula.FormulaInterpolator;
 import golden_ratio.darkzek.com.formula.RotationType;
 import javafx.beans.value.ChangeListener;
@@ -98,19 +99,39 @@ public class Controller {
 
         // Setup settings panel
 
-        rotation_per_step_slider.adjustValue(settings.rotationPerPoint);
+        rotation_per_step_slider.adjustValue(settings.rotationPerPoint.getValue());
         rotation_per_step_slider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             if (!this.interpolator.interpolating) {
-                this.interpolator.targetSettings.rotationPerPoint = newValue.floatValue();
+                this.interpolator.targetSettings.rotationPerPoint.setValue(newValue.doubleValue());
             }
+        });
+
+        rotation_per_step_field.setText(settings.rotationPerPoint.getExpression() + "");
+        rotation_per_step_field.setOnAction(actionEvent -> {
+            Expression rotationPerPoint = interpolator.targetSettings.rotationPerPoint;
+            rotationPerPoint.setExpression(rotation_per_step_field.getText());
+
+            // Set limit
+            if (rotationPerPoint.getValue() > 360) {
+                rotationPerPoint.setValue(360);
+            }
+
+            interpolator.targetSettings.rotationPerPoint.setValue(rotationPerPoint.getValue());
+
+            // Tell the interpolator to render the changes made above
+            interpolator.interpolating = true;
+
+            // If the expression was invalid, set it to the expression it was changed to.
+            if (rotationPerPoint.isInvalid()) {
+                rotation_per_step_field.setText(rotationPerPoint.getExpression());
+            }
+
+            // Update the slider to reflect the new value
+            rotation_per_step_slider.adjustValue(rotationPerPoint.getValue());
         });
 
         distance_per_rotation_slider.setValue(this.interpolator.targetSettings.distancePerRotation);
         distance_per_rotation_slider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-
-            if (newValue.doubleValue() == 0.01) {
-                return;
-            }
 
             if (this.interpolator.scrollingInterpolation) {
                 this.interpolator.scrollingInterpolation = false;
@@ -118,31 +139,6 @@ public class Controller {
             }
 
             this.interpolator.targetSettings.distancePerRotation = newValue.doubleValue();
-        });
-
-        rotation_per_step_field.setText(settings.rotationPerPoint + "");
-        rotation_per_step_field.setOnAction(actionEvent -> {
-            try {
-                double value = NumberFormat.getInstance(Locale.ENGLISH).parse(rotation_per_step_field.getText()).doubleValue();
-
-                double maxValue = Math.PI * 2;
-                if (interpolator.appliedSettings.rotationType == RotationType.Degrees) {
-                    maxValue = 360;
-                }
-
-                value = clamp(value, 0, maxValue);
-
-                interpolator.appliedSettings.rotationPerPoint = value;
-                interpolator.targetSettings.rotationPerPoint = value;
-                interpolator.updateAll = true;
-                interpolator.interpolating = true;
-                rotation_per_step_slider.adjustValue(value);
-                rotation_per_step_field.setText(value + "");
-            } catch (ParseException _e) {
-                // There was an error parsing
-                System.out.println("[ERROR] Error parsing text input for Rotation Per Step '" + rotation_per_step_field.getText() + "'");
-                rotation_per_step_field.setText(interpolator.targetSettings.rotationPerPoint + "");
-            }
         });
 
         points_field.setText(interpolator.appliedSettings.points + "");
@@ -159,7 +155,7 @@ public class Controller {
             } catch (ParseException _e) {
                 // There was an error parsing
                 System.out.println("[ERROR] Error parsing text input for Points Field '" + rotation_per_step_field.getText() + "'");
-                rotation_per_step_field.setText(interpolator.targetSettings.rotationPerPoint + "");
+                points_field.setText(interpolator.targetSettings.points + "");
             }
         });
 
@@ -234,8 +230,12 @@ public class Controller {
             settings.clear();
             interpolator.appliedSettings.clear();
             interpolator.targetSettings.clear();
+
             start_color_picker.setValue(Color.BLACK);
             end_color_picker.setValue(Color.BLACK);
+            measurement_degrees_setting.setSelected(true);
+            measurement_radians_setting.setSelected(true);
+
             interpolator.updateAll = true;
 
         });

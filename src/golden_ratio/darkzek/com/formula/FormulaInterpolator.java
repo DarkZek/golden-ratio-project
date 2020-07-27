@@ -14,7 +14,9 @@ import static golden_ratio.darkzek.com.Helper.lerp;
 public class FormulaInterpolator extends TimerTask {
     public Settings appliedSettings;
     public Settings targetSettings;
+    // Tells the interpolator if we should do a full rerender.
     public boolean updateAll;
+    // Tells the interpolator if we are animating currently.
     public boolean interpolating = false;
 
     private final Drawing drawing;
@@ -29,6 +31,7 @@ public class FormulaInterpolator extends TimerTask {
     // Doesn't schedule new frame until old one is done
     public boolean drewFrame = false;
     public boolean scrollingInterpolation = false;
+    public boolean interpolatingRotationPerPoint;
 
     /**
      * Initialises the formula controller and starts process
@@ -64,7 +67,7 @@ public class FormulaInterpolator extends TimerTask {
         // Run in UI thread
         Platform.runLater(() -> {
 
-            if (startTime < System.nanoTime() - 1000000000.0 && System.getenv("SHOW-FPS") != null) {
+            if (startTime < System.nanoTime() - 1_000_000_000.0 && System.getenv("SHOW-FPS") != null) {
                 double difference = (System.nanoTime() - startTime) * 0.000000001;
                 System.out.println("FPS: " + (frames / difference));
                 startTime = System.nanoTime();
@@ -77,11 +80,17 @@ public class FormulaInterpolator extends TimerTask {
 
             // Because of the high cost of if statements it's actually faster to just perform this calculation regardless of it the field actually changed
             // Some have speed multipliers to speed up certain animations
-            if (appliedSettings.rotationPerPoint != targetSettings.rotationPerPoint || updateAll) {
-                appliedSettings.rotationPerPoint = lerp(appliedSettings.rotationPerPoint, targetSettings.rotationPerPoint, animationSpeed * 10, 0.0000001);
-                controller.rotation_per_step_field.setText(appliedSettings.rotationPerPoint + "");
+            if (appliedSettings.rotationPerPoint.getValue() != targetSettings.rotationPerPoint.getValue() || updateAll) {
+
+                controller.rotation_per_step_field.setText(targetSettings.rotationPerPoint.getExpression());
+                appliedSettings.rotationPerPoint.setValue(lerp(appliedSettings.rotationPerPoint.getValue(), targetSettings.rotationPerPoint.getValue(), animationSpeed * 10, 0.0000001));
+
             } else {
                 interpolating = false;
+
+                if (appliedSettings.rotationPerPoint.getValue() != targetSettings.rotationPerPoint.getValue()) {
+                    appliedSettings.rotationPerPoint.setExpression(targetSettings.rotationPerPoint.getExpression());
+                }
             }
 
             if (appliedSettings.distancePerRotation != targetSettings.distancePerRotation || updateAll) {
