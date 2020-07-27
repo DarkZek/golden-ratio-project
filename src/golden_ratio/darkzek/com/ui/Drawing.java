@@ -15,6 +15,11 @@ public class Drawing {
 
     private Point[] points;
 
+    /**
+     * Creates a new drawing object
+     * @param canvas The canvas to draw on
+     * @param settings The settings to draw
+     */
     public Drawing(Canvas canvas, Settings settings) {
         this.canvas = canvas;
         context = canvas.getGraphicsContext2D();

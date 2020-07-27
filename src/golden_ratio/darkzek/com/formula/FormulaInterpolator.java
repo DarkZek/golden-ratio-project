@@ -11,11 +11,18 @@ import java.util.TimerTask;
 
 import static golden_ratio.darkzek.com.Helper.lerp;
 
+/**
+ * The formula interpolator is the seperate thread that animates the graph. It takes the current settings of the graph, and slowly morphs them into the target settings the user requested.
+ * This does things like makes the points animate towards where they should be when changing sliders, as well as animating colour changes and zooming in and out.
+ * Because this is on a seperate thread we need to be careful to shut it down when the window is closed.
+ */
 public class FormulaInterpolator extends TimerTask {
     public Settings appliedSettings;
     public Settings targetSettings;
+
     // Tells the interpolator if we should do a full rerender.
     public boolean updateAll;
+
     // Tells the interpolator if we are animating currently.
     public boolean interpolating = false;
 
@@ -25,13 +32,13 @@ public class FormulaInterpolator extends TimerTask {
 
     public int FPS = 60;
 
+    // FPS counting variables
     public int frames = 0;
     public long startTime = 0;
 
-    // Doesn't schedule new frame until old one is done
+    // Doesn't schedule new frame to be drawn until old one is done
     public boolean drewFrame = false;
     public boolean scrollingInterpolation = false;
-    public boolean interpolatingRotationPerPoint;
 
     /**
      * Initialises the formula controller and starts process

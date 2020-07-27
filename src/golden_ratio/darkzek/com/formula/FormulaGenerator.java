@@ -63,11 +63,20 @@ public class FormulaGenerator {
         return pointsOut;
     }
 
+    /**
+     * Sets the position of the center of the canvas
+     * @param centerX The X position of the center
+     * @param centerY The y position of the center.
+     */
     public void setCenter(double centerX, double centerY) {
         this.centerX = centerX;
         this.centerY = centerY;
     }
 
+    /**
+     * Simple setter for the settings we should use
+     * @param settings
+     */
     public void setSettings(Settings settings) {
         this.settings = settings;
     }

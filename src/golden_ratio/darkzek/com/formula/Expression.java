@@ -6,10 +6,18 @@ public class Expression {
     boolean invalid;
     ExpressionType type;
 
+    /**
+     * Creates an expression from a raw value
+     * @param value
+     */
     public Expression(double value) {
         setValue(value);
     }
 
+    /**
+     * Sets an expressions text data then calculates the value from that and stores it in `output`
+     * @param expression The expression data
+     */
     public void setExpression(String expression) {
         this.expr = expression;
 
@@ -17,10 +25,18 @@ public class Expression {
         calculateValue();
     }
 
+    /**
+     * A getter for this expressions Value
+     * @return The value
+     */
     public double getValue() {
         return output;
     }
 
+    /**
+     * Set this expressions value to a manual double. This means it has the type ExpressionType.VALUE
+     * @param value
+     */
     public void setValue(double value) {
 
         if (value == output) {
@@ -33,11 +49,17 @@ public class Expression {
         this.type = ExpressionType.VALUE;
     }
 
+    /**
+     * Runs the methods to calculate this expressions value
+     */
     public void calculateValue() {
         calculateExpressionType();
         calculateOutput();
     }
 
+    /**
+     * Calculates output based on the expression type and expression
+     */
     private void calculateOutput() {
         if (type == ExpressionType.DIVISION) {
             String[] values = expr.split("/");
@@ -85,8 +107,8 @@ public class Expression {
             String[] values = expr.split("-");
 
             try {
-                Double value1 = Double.parseDouble(values[0]);
-                Double value2 = Double.parseDouble(values[1]);
+                double value1 = Double.parseDouble(values[0]);
+                double value2 = Double.parseDouble(values[1]);
 
                 output = value1 - value2;
                 invalid = false;
@@ -99,8 +121,8 @@ public class Expression {
             String[] values = expr.split("\\^");
 
             try {
-                Double value1 = Double.parseDouble(values[0]);
-                Double value2 = Double.parseDouble(values[1]);
+                double value1 = Double.parseDouble(values[0]);
+                double value2 = Double.parseDouble(values[1]);
 
                 output = Math.pow(value1, value2);
                 invalid = false;
@@ -152,15 +174,26 @@ public class Expression {
         }
     }
 
+    /**
+     * Simple getter for the raw expression
+     * @return Expression string
+     */
     public String getExpression() {
         return expr;
     }
 
+    /**
+     * Returns if the expression is invalid in its current state.
+     * @return Returns the invalid status of this expression
+     */
     public boolean isInvalid() {
         return invalid;
     }
 }
 
+/**
+ * Details what type of expression an expression is. These correspond with mathematical symbols such as / * + - ^
+ */
 enum ExpressionType {
     VALUE,
     DIVISION,

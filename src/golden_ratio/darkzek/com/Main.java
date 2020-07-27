@@ -11,6 +11,11 @@ public class Main extends Application {
 
     FXMLLoader loader;
 
+    /**
+     * Loads the window
+     * @param primaryStage Internal JavaFX
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         loader = new FXMLLoader(getClass().getResource("ui/window.fxml"));

@@ -241,6 +241,9 @@ public class Controller {
         });
     }
 
+    /**
+     * Stops the interpolation thread
+     */
     public void stop() {
         // Stop the interpolator thread
         interpolator.drop();

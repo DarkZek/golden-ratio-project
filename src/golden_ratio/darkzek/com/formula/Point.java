@@ -2,6 +2,9 @@ package golden_ratio.darkzek.com.formula;
 
 import javafx.scene.paint.Color;
 
+/**
+ * A point on the graph
+ */
 public class Point {
     public double x = 0;
     public double y = 0;
