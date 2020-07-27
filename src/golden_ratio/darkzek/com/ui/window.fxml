@@ -90,7 +90,7 @@
                                  <Text fill="#e1e1e1" layoutX="14.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Point Size" wrappingWidth="138.7294921875" />
                                  <Slider fx:id="point_size_slider" blockIncrement="0.01" layoutX="1.0" layoutY="30.0" max="10.0" min="3.0" prefWidth="178.0" />
                                  <Text fill="#e1e1e1" layoutX="14.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Point size increase per step" wrappingWidth="138.7294921875" />
-                                 <Slider fx:id="point_size_increase_slider" blockIncrement="0.01" layoutX="1.0" layoutY="92.0" max="0.8" prefWidth="178.0" />
+                                 <Slider fx:id="point_size_increase_slider" blockIncrement="0.01" layoutX="1.0" layoutY="92.0" max="0.05" min="-0.05" prefWidth="178.0" />
                              </children>
                              <padding>
                                  <Insets top="10.0" />
