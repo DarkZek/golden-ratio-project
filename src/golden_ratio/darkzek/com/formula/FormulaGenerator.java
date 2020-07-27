@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 /**
  * Formula Generator is a class that takes in a set of Settings and then outputs a list of Points.
- * It also gets interacted by the FormulaInterpolator which interpolates between these applied settings and some target settings to achieve smooth transitions.
+ * It also gets interacted by the FormulaInterpolator which interpolates between these applied
+ * settings and some target settings to achieve smooth transitions.
  */
 public class FormulaGenerator {
 
@@ -20,10 +21,11 @@ public class FormulaGenerator {
     public FormulaGenerator() {}
 
     /**
-     * Calculate points takes in all of the variables that have been set in the Formula Generator and calculates a list of points using the formula.
+     * Calculate points takes in all of the variables that have been set in the Formula Generator
+     * and calculates a list of points using the formula.
+     *
      * @return A list of points calculated by the Settings variable
      */
-
     public Point[] calculatePoints() {
 
         ArrayList<Point> points = new ArrayList();
@@ -40,7 +42,9 @@ public class FormulaGenerator {
 
             pointY = (centerY * 2) - pointY;
 
-            Color color = Helper.lerpColor(settings.startColor, settings.endColor, ((double) i ) / settings.points);
+            Color color =
+                    Helper.lerpColor(
+                            settings.startColor, settings.endColor, ((double) i) / settings.points);
 
             points.add(new Point(pointX, pointY, currentSize, color));
 
@@ -49,7 +53,8 @@ public class FormulaGenerator {
                 currentAngle += (Math.PI * 2) * settings.rotationPerPoint.getValue();
             } else {
                 // Convert degrees to radians
-                double radians = (Math.PI * 2) * (settings.rotationPerPoint.getValue() * (Math.PI / 180));
+                double radians =
+                        (Math.PI * 2) * (settings.rotationPerPoint.getValue() * (Math.PI / 180));
                 currentAngle += radians;
             }
             currentAngle %= Math.PI * 2;
@@ -65,6 +70,7 @@ public class FormulaGenerator {
 
     /**
      * Sets the position of the center of the canvas
+     *
      * @param centerX The X position of the center
      * @param centerY The y position of the center.
      */
@@ -75,6 +81,7 @@ public class FormulaGenerator {
 
     /**
      * Simple setter for the settings we should use
+     *
      * @param settings
      */
     public void setSettings(Settings settings) {

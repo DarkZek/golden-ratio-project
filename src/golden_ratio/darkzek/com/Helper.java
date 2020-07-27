@@ -2,13 +2,11 @@ package golden_ratio.darkzek.com;
 
 import javafx.scene.paint.Color;
 
-/**
- * Simple static helper functions can be used anywhere they're needed
- */
-
+/** Simple static helper functions can be used anywhere they're needed */
 public class Helper {
     /**
      * Lerps between color1 and color2 by i amount
+     *
      * @param color1 First colour to be interpolated
      * @param color2 Second colour to be interpolated
      * @param i Amount to be interpolated by
@@ -17,16 +15,17 @@ public class Helper {
     public static Color lerpColor(Color color1, Color color2, double i) {
         double r, g, b, a;
 
-        r = (color1.getRed() * i) + (color2.getRed() * ( 1 - i));
-        g = (color1.getGreen() * i) + (color2.getGreen() * ( 1 - i));
-        b = (color1.getBlue() * i) + (color2.getBlue() * ( 1 - i));
-        a = (color1.getOpacity() * i) + (color2.getOpacity() * ( 1 - i));
+        r = (color1.getRed() * i) + (color2.getRed() * (1 - i));
+        g = (color1.getGreen() * i) + (color2.getGreen() * (1 - i));
+        b = (color1.getBlue() * i) + (color2.getBlue() * (1 - i));
+        a = (color1.getOpacity() * i) + (color2.getOpacity() * (1 - i));
 
         return new Color(r, g, b, a);
     }
 
     /**
      * If n is under 0, return 0; Otherwise return n
+     *
      * @param n
      * @return Output
      */
@@ -40,6 +39,7 @@ public class Helper {
 
     /**
      * Clamps a double between two other values
+     *
      * @param n The value to be clamped
      * @param floor The minimum value n may be
      * @param ceil The maximum value n may be
@@ -53,6 +53,7 @@ public class Helper {
 
     /**
      * Clamps an int between two other values
+     *
      * @param n The value to be clamped
      * @param floor The minimum value n may be
      * @param ceil The maximum value n may be
@@ -65,28 +66,31 @@ public class Helper {
     }
 
     /**
-     * Interpolates between two numbers, with a minimum change amount that if it doesnt exceed, we can just return b.
+     * Interpolates between two numbers, with a minimum change amount that if it doesnt exceed, we
+     * can just return b.
+     *
      * @param a The first number
      * @param b The second number
      * @param f The amount to interpolate between them
      * @param min_change The minimum amount of change to interpolate by
      * @return The interpolated value
      */
-    public static double lerp(double a, double b, double f, double min_change)
-    {
-        if (Math.abs(a - b) < min_change) { return b; }
+    public static double lerp(double a, double b, double f, double min_change) {
+        if (Math.abs(a - b) < min_change) {
+            return b;
+        }
         return a + f * (b - a);
     }
 
     /**
      * Interpolates between two numbers
+     *
      * @param a The first number
      * @param b The second number
      * @param f The amount to interpolate between them
      * @return The interpolated value
      */
-    public static int lerpInt(int a, int b, double f)
-    {
+    public static int lerpInt(int a, int b, double f) {
         return ((int) Math.ceil(a + f)) * (b - a);
     }
 }

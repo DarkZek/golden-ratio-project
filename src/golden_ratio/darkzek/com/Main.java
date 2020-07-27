@@ -13,11 +13,12 @@ public class Main extends Application {
 
     /**
      * Loads the window
+     *
      * @param primaryStage Internal JavaFX
      * @throws Exception
      */
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         loader = new FXMLLoader(getClass().getResource("ui/window.fxml"));
 
         Parent root = loader.load();
@@ -25,7 +26,6 @@ public class Main extends Application {
         Scene scene = new Scene(root, 1200, 1000);
         primaryStage.setScene(scene);
         primaryStage.show();
-        
     }
 
     @Override

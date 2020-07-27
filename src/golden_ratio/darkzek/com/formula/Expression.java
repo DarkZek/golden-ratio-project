@@ -8,6 +8,7 @@ public class Expression {
 
     /**
      * Creates an expression from a raw value
+     *
      * @param value
      */
     public Expression(double value) {
@@ -16,6 +17,7 @@ public class Expression {
 
     /**
      * Sets an expressions text data then calculates the value from that and stores it in `output`
+     *
      * @param expression The expression data
      */
     public void setExpression(String expression) {
@@ -27,6 +29,7 @@ public class Expression {
 
     /**
      * A getter for this expressions Value
+     *
      * @return The value
      */
     public double getValue() {
@@ -34,7 +37,9 @@ public class Expression {
     }
 
     /**
-     * Set this expressions value to a manual double. This means it has the type ExpressionType.VALUE
+     * Set this expressions value to a manual double. This means it has the type
+     * ExpressionType.VALUE
+     *
      * @param value
      */
     public void setValue(double value) {
@@ -49,17 +54,13 @@ public class Expression {
         this.type = ExpressionType.VALUE;
     }
 
-    /**
-     * Runs the methods to calculate this expressions value
-     */
+    /** Runs the methods to calculate this expressions value */
     public void calculateValue() {
         calculateExpressionType();
         calculateOutput();
     }
 
-    /**
-     * Calculates output based on the expression type and expression
-     */
+    /** Calculates output based on the expression type and expression */
     private void calculateOutput() {
         if (type == ExpressionType.DIVISION) {
             String[] values = expr.split("/");
@@ -142,9 +143,7 @@ public class Expression {
         }
     }
 
-    /**
-     * Calculates the type of expression this Expression is and stores it in the type variable
-     */
+    /** Calculates the type of expression this Expression is and stores it in the type variable */
     public void calculateExpressionType() {
         if (expr.contains("/")) {
             this.type = ExpressionType.DIVISION;
@@ -176,6 +175,7 @@ public class Expression {
 
     /**
      * Simple getter for the raw expression
+     *
      * @return Expression string
      */
     public String getExpression() {
@@ -184,6 +184,7 @@ public class Expression {
 
     /**
      * Returns if the expression is invalid in its current state.
+     *
      * @return Returns the invalid status of this expression
      */
     public boolean isInvalid() {
@@ -192,7 +193,8 @@ public class Expression {
 }
 
 /**
- * Details what type of expression an expression is. These correspond with mathematical symbols such as / * + - ^
+ * Details what type of expression an expression is. These correspond with mathematical symbols such
+ * as / * + - ^
  */
 enum ExpressionType {
     VALUE,

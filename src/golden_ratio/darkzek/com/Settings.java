@@ -11,12 +11,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
- * This is the settings class that is used by the formula class to store most of the formula parameters
- * It also features loading and saving function to make it persistant between restarts
+ * This is the settings class that is used by the formula class to store most of the formula
+ * parameters It also features loading and saving function to make it persistant between restarts
  */
-
 public class Settings implements Cloneable {
-    public Expression rotationPerPoint =  new Expression(1);
+    public Expression rotationPerPoint = new Expression(1);
     public double distancePerRotation = 1;
     public int points = 100;
     public Color startColor = Color.BLACK;
@@ -29,9 +28,9 @@ public class Settings implements Cloneable {
 
     /**
      * Creates a new settings instance and tries to load the saved settings on disk
+     *
      * @return New settings instance
      */
-
     public static Settings load() {
 
         Settings settings = new Settings();
@@ -45,59 +44,74 @@ public class Settings implements Cloneable {
         Path path = Path.of("./settings.yml");
 
         try {
-            Files.lines(path).forEach(line -> {
-               String[] lines = line.split(": ");
+            Files.lines(path)
+                    .forEach(
+                            line -> {
+                                String[] lines = line.split(": ");
 
-               // If there's not two theres an error because its formatted like `key: value`
-               if (lines.length != 2) {
-                   return;
-               }
+                                // If there's not two theres an error because its formatted like
+                                // `key: value`
+                                if (lines.length != 2) {
+                                    return;
+                                }
 
-               String value = lines[1];
+                                String value = lines[1];
 
-               switch (lines[0]) {
-                   case "rotation_per_point": {
-                       settings.rotationPerPoint.setExpression(value);
-                       break;
-                   }
-                   case "distance_per_rotation": {
-                       settings.distancePerRotation = Double.parseDouble(value);
-                       break;
-                   }
-                   case "points": {
-                       settings.points = Integer.parseInt(value);
-                       break;
-                   }
-                   case "start_color": {
-                       settings.startColor = Color.web(value);
-                       break;
-                   }
-                   case "end_color": {
-                       settings.endColor = Color.web(value);
-                       break;
-                   }
-                   case "rotation_type": {
-                       settings.rotationType = RotationType.valueOf(value);
-                       break;
-                   }
-                   case "default_size": {
-                       settings.defaultSize = Double.parseDouble(value);
-                       break;
-                   }
-                   case "size_increase_per_point": {
-                       settings.sizeIncreasePerPoint = Double.parseDouble(value);
-                       break;
-                   }
-                   case "smooth_animation": {
-                       settings.smoothAnimation = Boolean.getBoolean(value);
-                       break;
-                   }
-                   case "joinClosePoints": {
-                       settings.joinClosePoints = Boolean.getBoolean(value);
-                       break;
-                   }
-               }
-            });
+                                switch (lines[0]) {
+                                    case "rotation_per_point":
+                                        {
+                                            settings.rotationPerPoint.setExpression(value);
+                                            break;
+                                        }
+                                    case "distance_per_rotation":
+                                        {
+                                            settings.distancePerRotation =
+                                                    Double.parseDouble(value);
+                                            break;
+                                        }
+                                    case "points":
+                                        {
+                                            settings.points = Integer.parseInt(value);
+                                            break;
+                                        }
+                                    case "start_color":
+                                        {
+                                            settings.startColor = Color.web(value);
+                                            break;
+                                        }
+                                    case "end_color":
+                                        {
+                                            settings.endColor = Color.web(value);
+                                            break;
+                                        }
+                                    case "rotation_type":
+                                        {
+                                            settings.rotationType = RotationType.valueOf(value);
+                                            break;
+                                        }
+                                    case "default_size":
+                                        {
+                                            settings.defaultSize = Double.parseDouble(value);
+                                            break;
+                                        }
+                                    case "size_increase_per_point":
+                                        {
+                                            settings.sizeIncreasePerPoint =
+                                                    Double.parseDouble(value);
+                                            break;
+                                        }
+                                    case "smooth_animation":
+                                        {
+                                            settings.smoothAnimation = Boolean.getBoolean(value);
+                                            break;
+                                        }
+                                    case "joinClosePoints":
+                                        {
+                                            settings.joinClosePoints = Boolean.getBoolean(value);
+                                            break;
+                                        }
+                                }
+                            });
 
         } catch (Exception e) {
             return new Settings();
@@ -106,10 +120,7 @@ public class Settings implements Cloneable {
         return settings;
     }
 
-    /**
-     * Tries to save the settings to disk
-     */
-
+    /** Tries to save the settings to disk */
     public void save() {
         String content = "# Settings configuration for Golden Ratio Viewer" + "\n";
         content += "rotation_per_point: " + rotationPerPoint.getExpression() + "\n";
@@ -140,6 +151,7 @@ public class Settings implements Cloneable {
 
     /**
      * Clones the current settings
+     *
      * @return Returns a new copy of the settings
      */
     public Settings do_clone() {
@@ -153,9 +165,7 @@ public class Settings implements Cloneable {
         return null;
     }
 
-    /**
-     * Clears the current settings and restores to factory default.
-     */
+    /** Clears the current settings and restores to factory default. */
     public void clear() {
         rotationPerPoint.setValue(1);
         distancePerRotation = 1;
@@ -169,4 +179,3 @@ public class Settings implements Cloneable {
         joinClosePoints = false;
     }
 }
-

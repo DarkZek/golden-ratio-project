@@ -17,6 +17,7 @@ public class Drawing {
 
     /**
      * Creates a new drawing object
+     *
      * @param canvas The canvas to draw on
      * @param settings The settings to draw
      */
@@ -29,24 +30,30 @@ public class Drawing {
 
     /**
      * To be replaced with a drawing class soon
+     *
      * @param context The context on which to draw
      */
-
     public void drawPoints(GraphicsContext context) {
 
         context.clearRect(0, 0, canvas.getWidth() - 1, canvas.getHeight() - 1);
 
         for (Point point : points) {
             context.setFill(point.color);
-            context.fillRoundRect(point.x - (point.size / 2), point.y - (point.size / 2), point.size, point.size, point.size, point.size);
+            context.fillRoundRect(
+                    point.x - (point.size / 2),
+                    point.y - (point.size / 2),
+                    point.size,
+                    point.size,
+                    point.size,
+                    point.size);
         }
     }
 
     /**
      * Sets up the formula with the inputted settings
+     *
      * @param settings The settings that the points generator should use
      */
-
     private void setupFormula(Settings settings) {
         formulaGenerator = new FormulaGenerator();
 
@@ -56,7 +63,8 @@ public class Drawing {
     }
 
     /**
-     * Updates the canvas with the newest applied settings and recalculates points with those settings. Then it draws those new points to the screen
+     * Updates the canvas with the newest applied settings and recalculates points with those
+     * settings. Then it draws those new points to the screen
      */
     public void updateCanvas() {
         points = formulaGenerator.calculatePoints();
@@ -64,9 +72,7 @@ public class Drawing {
         drawPoints(context);
     }
 
-    /**
-     * Detects resize events and updates the other classes accordingly.
-     */
+    /** Detects resize events and updates the other classes accordingly. */
     public void resized(double width, double height) {
         formulaGenerator.setCenter(width / 2.0, height / 2.0);
 
