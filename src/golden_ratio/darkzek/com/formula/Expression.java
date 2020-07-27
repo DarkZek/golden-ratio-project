@@ -45,7 +45,6 @@ public class Expression {
             try {
                 Double value1 = Double.parseDouble(values[0]);
                 Double value2 = Double.parseDouble(values[1]);
-                System.out.println(value1 + " / "  +value2);
 
                 output = value1 / value2;
                 invalid = false;

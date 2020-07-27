@@ -99,8 +99,8 @@ public class Settings implements Cloneable {
                }
             });
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            return new Settings();
         }
 
         return settings;
