@@ -43,7 +43,7 @@
                          </Pane>
                          <Pane minWidth="40.0" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #5a5a5a; -fx-border-radius: 50 50 50 50; -fx-border-color: #5a5a5a; -fx-background-radius: 5 5 5 5;">
                              <children>
-                                 <Slider fx:id="distance_per_rotation_slider" blockIncrement="0.01" layoutX="1.0" layoutY="30.0" max="6.28318530718" min="0.001" prefWidth="178.0" />
+                                 <Slider fx:id="distance_per_rotation_slider" blockIncrement="0.01" layoutX="1.0" layoutY="30.0" max="6.28318530718" min="0.8" prefWidth="178.0" />
                                  <Text fill="#e1e1e1" layoutX="14.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Distance per rotation" wrappingWidth="138.7294921875" />
                              </children>
                              <padding>

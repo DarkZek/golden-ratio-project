@@ -16,6 +16,15 @@ public class Expression {
     }
 
     /**
+     * Creates an expression from string expression
+     *
+     * @param expression
+     */
+    public Expression(String expression) {
+        setExpression(expression);
+    }
+
+    /**
      * Sets an expressions text data then calculates the value from that and stores it in `output`
      *
      * @param expression The expression data
@@ -71,12 +80,11 @@ public class Expression {
 
                 output = value1 / value2;
                 invalid = false;
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 invalid = true;
                 output = 0;
             }
-        }
-        if (type == ExpressionType.MULTIPLICATION) {
+        } else if (type == ExpressionType.MULTIPLICATION) {
             String[] values = expr.split("\\*");
 
             try {
@@ -85,12 +93,11 @@ public class Expression {
 
                 output = value1 * value2;
                 invalid = false;
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 invalid = true;
                 output = 0;
             }
-        }
-        if (type == ExpressionType.ADDITION) {
+        } else if (type == ExpressionType.ADDITION) {
             String[] values = expr.split("\\+");
 
             try {
@@ -99,12 +106,11 @@ public class Expression {
 
                 output = value1 + value2;
                 invalid = false;
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 invalid = true;
                 output = 0;
             }
-        }
-        if (type == ExpressionType.MINUS) {
+        } else if (type == ExpressionType.MINUS) {
             String[] values = expr.split("-");
 
             try {
@@ -113,12 +119,11 @@ public class Expression {
 
                 output = value1 - value2;
                 invalid = false;
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 invalid = true;
                 output = 0;
             }
-        }
-        if (type == ExpressionType.SQUARE) {
+        } else if (type == ExpressionType.SQUARE) {
             String[] values = expr.split("\\^");
 
             try {
@@ -127,19 +132,21 @@ public class Expression {
 
                 output = Math.pow(value1, value2);
                 invalid = false;
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 invalid = true;
                 output = 0;
             }
-        }
-        if (type == ExpressionType.VALUE) {
+        } else if (type == ExpressionType.VALUE) {
             try {
                 output = Double.parseDouble(expr);
                 invalid = false;
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 invalid = true;
                 output = 0;
             }
+        } else {
+            invalid = true;
+            output = 0;
         }
     }
 

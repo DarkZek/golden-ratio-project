@@ -6,14 +6,15 @@ import golden_ratio.darkzek.com.formula.FormulaInterpolator;
 import golden_ratio.darkzek.com.formula.RotationType;
 import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
@@ -92,8 +93,8 @@ public class Controller {
                     double change = scrollEvent.getDeltaY() * 0.001;
 
                     this.interpolator.targetSettings.distancePerRotation =
-                            clampToPositive(
-                                    change + this.interpolator.targetSettings.distancePerRotation);
+                            clamp(change + this.interpolator.targetSettings.distancePerRotation, 0.8, 6.2);
+
                     distance_per_rotation_slider.setValue(
                             this.interpolator.targetSettings.distancePerRotation);
                     this.interpolator.scrollingInterpolation = true;
@@ -118,20 +119,16 @@ public class Controller {
                     Expression rotationPerPoint = interpolator.targetSettings.rotationPerPoint;
                     rotationPerPoint.setExpression(rotation_per_step_field.getText());
 
-                    // Set limit
-                    if (rotationPerPoint.getValue() > 360) {
-                        rotationPerPoint.setValue(360);
-                    }
-
-                    interpolator.targetSettings.rotationPerPoint.setValue(
-                            rotationPerPoint.getValue());
-
                     // Tell the interpolator to render the changes made above
                     interpolator.interpolating = true;
 
                     // If the expression was invalid, set it to the expression it was changed to.
                     if (rotationPerPoint.isInvalid()) {
-                        rotation_per_step_field.setText(rotationPerPoint.getExpression());
+                        rotation_per_step_field.setBorder(
+                                new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(5.0), BorderWidths.DEFAULT)));
+                    } else {
+                        rotation_per_step_field.setBorder(
+                                new Border(new BorderStroke(Color.web("#323232"), BorderStrokeStyle.SOLID, new CornerRadii(5.0), BorderWidths.DEFAULT)));
                     }
 
                     // Update the slider to reflect the new value
@@ -169,10 +166,6 @@ public class Controller {
                         points_field.setText(value + "");
                     } catch (ParseException _e) {
                         // There was an error parsing
-                        System.out.println(
-                                "[ERROR] Error parsing text input for Points Field '"
-                                        + rotation_per_step_field.getText()
-                                        + "'");
                         points_field.setText(interpolator.targetSettings.points + "");
                     }
                 });
@@ -203,25 +196,26 @@ public class Controller {
                 .addListener(
                         (observableValue, oldToggle, newToggle) -> {
                             String option = ((RadioButton) newToggle).getText();
+
                             interpolator.updateAll = true;
+
                             if (option.equals("Radians")) {
                                 interpolator.appliedSettings.rotationType = RotationType.Radians;
                                 interpolator.targetSettings.rotationType = RotationType.Radians;
+                                rotation_per_step_slider.setMax(Math.PI * 2);
                             } else {
                                 interpolator.appliedSettings.rotationType = RotationType.Degrees;
                                 interpolator.targetSettings.rotationType = RotationType.Degrees;
+                                rotation_per_step_slider.setMax(360.0);
                             }
                         });
 
         if (interpolator.appliedSettings.rotationType == RotationType.Radians) {
             measurement_radians_setting.setSelected(true);
+            rotation_per_step_slider.setMax(Math.PI * 2);
         } else {
             measurement_degrees_setting.setSelected(true);
-
-            //            // Update the distance per rotation sliders to degrees
-            //            distance_per_rotation_slider.setMax(360.0);
-            //            distance_per_rotation_slider.setValue(clamp(0, Math.PI,
-            // distance_per_rotation_slider.getValue()));
+            rotation_per_step_slider.setMax(360.0);
         }
 
         point_size_slider.setValue(interpolator.targetSettings.defaultSize);
@@ -280,10 +274,20 @@ public class Controller {
                     interpolator.appliedSettings.clear();
                     interpolator.targetSettings.clear();
 
-                    start_color_picker.setValue(Color.BLACK);
-                    end_color_picker.setValue(Color.BLACK);
-                    measurement_degrees_setting.setSelected(true);
-                    measurement_radians_setting.setSelected(true);
+                    start_color_picker.setValue(interpolator.appliedSettings.startColor);
+                    end_color_picker.setValue(interpolator.appliedSettings.endColor);
+
+                    if (interpolator.appliedSettings.rotationType == RotationType.Radians) {
+                        measurement_degrees_setting.setSelected(false);
+                        measurement_radians_setting.setSelected(true);
+                    } else {
+                        measurement_degrees_setting.setSelected(true);
+                        measurement_radians_setting.setSelected(false);
+                    }
+
+                    points_field.setText(interpolator.appliedSettings.points + "");
+                    point_size_slider.setValue(interpolator.appliedSettings.defaultSize);
+                    point_size_increase_slider.setValue(interpolator.appliedSettings.sizeIncreasePerPoint);
 
                     interpolator.updateAll = true;
                 });

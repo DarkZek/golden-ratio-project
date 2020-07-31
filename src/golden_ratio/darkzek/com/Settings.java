@@ -15,16 +15,15 @@ import java.nio.file.Path;
  * parameters It also features loading and saving function to make it persistant between restarts
  */
 public class Settings implements Cloneable {
-    public Expression rotationPerPoint = new Expression(1);
-    public double distancePerRotation = 1;
-    public int points = 100;
-    public Color startColor = Color.BLACK;
+    public Expression rotationPerPoint = new Expression(0.115);
+    public double distancePerRotation = 2.249234114419136;
+    public int points = 200;
+    public Color startColor = Color.web("0x000080ff");
     public Color endColor = Color.BLACK;
-    public RotationType rotationType = RotationType.Degrees;
-    public double defaultSize = 10;
-    public double sizeIncreasePerPoint = -0.02;
+    public RotationType rotationType = RotationType.Radians;
+    public double defaultSize = 6;
+    public double sizeIncreasePerPoint = 0.05;
     public boolean smoothAnimation = true;
-    public boolean joinClosePoints = false;
 
     /**
      * Creates a new settings instance and tries to load the saved settings on disk
@@ -100,16 +99,6 @@ public class Settings implements Cloneable {
                                                     Double.parseDouble(value);
                                             break;
                                         }
-                                    case "smooth_animation":
-                                        {
-                                            settings.smoothAnimation = Boolean.getBoolean(value);
-                                            break;
-                                        }
-                                    case "joinClosePoints":
-                                        {
-                                            settings.joinClosePoints = Boolean.getBoolean(value);
-                                            break;
-                                        }
                                 }
                             });
 
@@ -131,8 +120,6 @@ public class Settings implements Cloneable {
         content += "rotation_type: " + rotationType + "\n";
         content += "default_size: " + defaultSize + "\n";
         content += "size_increase_per_point: " + sizeIncreasePerPoint + "\n";
-        content += "smooth_animation: " + smoothAnimation + "\n";
-        content += "join_close_points: " + joinClosePoints + "\n";
 
         try {
             File file = new File("./settings.yml");
@@ -157,7 +144,7 @@ public class Settings implements Cloneable {
     public Settings do_clone() {
         try {
             Settings s = (Settings) this.clone();
-            s.rotationPerPoint = new Expression(this.rotationPerPoint.getValue());
+            s.rotationPerPoint = new Expression(this.rotationPerPoint.getExpression());
             return s;
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -167,15 +154,13 @@ public class Settings implements Cloneable {
 
     /** Clears the current settings and restores to factory default. */
     public void clear() {
-        rotationPerPoint.setValue(1);
-        distancePerRotation = 1;
-        points = 100;
-        startColor = Color.BLACK;
+        rotationPerPoint.setValue(0.115);
+        distancePerRotation = 2.249234114419136;
+        points = 200;
+        startColor = Color.web("0x000080ff");
         endColor = Color.BLACK;
-        rotationType = RotationType.Degrees;
-        defaultSize = 10;
-        sizeIncreasePerPoint = -0.02;
-        smoothAnimation = true;
-        joinClosePoints = false;
+        rotationType = RotationType.Radians;
+        defaultSize = 6;
+        sizeIncreasePerPoint = 0.05;
     }
 }

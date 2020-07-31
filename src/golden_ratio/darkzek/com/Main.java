@@ -24,6 +24,10 @@ public class Main extends Application {
         Parent root = loader.load();
         primaryStage.setTitle("Golden Ratio Viewer");
         Scene scene = new Scene(root, 1200, 1000);
+
+        primaryStage.setMinHeight(800);
+        primaryStage.setMinWidth(800);
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }

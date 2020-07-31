@@ -75,6 +75,7 @@ public class FormulaInterpolator extends TimerTask {
         // Run in UI thread
         Platform.runLater(
                 () -> {
+                    // Debugging tool to display fps
                     if (startTime < System.nanoTime() - 1_000_000_000.0
                             && System.getenv("SHOW-FPS") != null) {
                         double difference = (System.nanoTime() - startTime) * 0.000000001;
@@ -82,26 +83,20 @@ public class FormulaInterpolator extends TimerTask {
                         startTime = System.nanoTime();
                         frames = 0;
                     }
+
                     frames++;
 
-                    // This is ran every frame so if the fps is 30 a (1/30) animation speed will
-                    // take 1 second
-                    // to complete
+                    // This is ran every frame so if the fps is 30 a (1/30) animation speed will take 1 second to complete
                     double animationSpeed = 1.0 / FPS;
 
-                    // Because of the high cost of if statements it's actually faster to just
-                    // perform this
-                    // calculation regardless of it the field actually changed
-                    // Some have speed multipliers to speed up certain animations
                     if (appliedSettings.rotationPerPoint.getValue()
                                     != targetSettings.rotationPerPoint.getValue()
-                            || updateAll) {
+                                    || updateAll) {
 
-                        controller.rotation_per_step_field.setText(
-                                targetSettings.rotationPerPoint.getExpression());
+                        controller.rotation_per_step_field.setText(targetSettings.rotationPerPoint.getExpression());
+
                         appliedSettings.rotationPerPoint.setValue(
-                                lerp(
-                                        appliedSettings.rotationPerPoint.getValue(),
+                                lerp(appliedSettings.rotationPerPoint.getValue(),
                                         targetSettings.rotationPerPoint.getValue(),
                                         animationSpeed * 10,
                                         0.0000001));
