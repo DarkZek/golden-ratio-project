@@ -82,15 +82,12 @@ public class Helper {
         return a + f * (b - a);
     }
 
-    /**
-     * Interpolates between two numbers
-     *
-     * @param a The first number
-     * @param b The second number
-     * @param f The amount to interpolate between them
-     * @return The interpolated value
+    /** Rounds a double to decimalPlaces places
+     * @param input Input number
+     * @param decimalPlaces Amount of decimal places
+     * @return The output value
      */
-    public static int lerpInt(int a, int b, double f) {
-        return ((int) Math.ceil(a + f)) * (b - a);
+    public static double round(double input, int decimalPlaces) {
+        return Math.round(input * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
     }
 }

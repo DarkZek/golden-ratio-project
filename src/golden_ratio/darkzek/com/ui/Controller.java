@@ -158,7 +158,7 @@ public class Controller {
                                         .parse(points_field.getText())
                                         .intValue();
 
-                        value = clampInt(value, 0, 1000000);
+                        value = clampInt(value, 0, 10000);
 
                         interpolator.appliedSettings.points = value;
                         interpolator.targetSettings.points = value;

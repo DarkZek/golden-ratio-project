@@ -44,7 +44,7 @@ public class FormulaGenerator {
 
             Color color =
                     Helper.lerpColor(
-                            settings.startColor, settings.endColor, ((double) i) / settings.points);
+                            settings.endColor, settings.startColor, ((double) i) / settings.points);
 
             points.add(new Point(pointX, pointY, currentSize, color));
 
