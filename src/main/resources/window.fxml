@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.8253311258278145" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #4e4e4e;" styleClass="split" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="golden_ratio.darkzek.com.ui.Controller">
+<SplitPane dividerPositions="0.8253311258278145" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #4e4e4e;" styleClass="split" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.darkzek.goldenratio.ui.Controller">
 <items>
   <AnchorPane fx:id="canvas_pane" minHeight="500.0" minWidth="500.0" prefHeight="1000.0" prefWidth="1000.0" style="-fx-background-color: white;">
        <children>

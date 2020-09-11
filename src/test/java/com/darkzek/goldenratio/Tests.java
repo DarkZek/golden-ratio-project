@@ -1,11 +1,11 @@
-package golden_ratio.darkzek.com;
+package com.darkzek.goldenratio;
 
 import javafx.scene.paint.Color;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HelperTest {
+class Tests {
 
     @org.junit.jupiter.api.Test
     void lerpColor() {

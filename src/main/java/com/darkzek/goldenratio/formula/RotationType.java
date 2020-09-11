@@ -1,4 +1,4 @@
-package golden_ratio.darkzek.com.formula;
+package com.darkzek.goldenratio.formula;
 
 /** Specifies what type of rotation something is */
 public enum RotationType {

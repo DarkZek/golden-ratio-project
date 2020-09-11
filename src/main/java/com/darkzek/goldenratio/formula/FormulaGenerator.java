@@ -1,7 +1,7 @@
-package golden_ratio.darkzek.com.formula;
+package com.darkzek.goldenratio.formula;
 
-import golden_ratio.darkzek.com.Helper;
-import golden_ratio.darkzek.com.Settings;
+import com.darkzek.goldenratio.Helper;
+import com.darkzek.goldenratio.Settings;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;

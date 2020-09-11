@@ -1,4 +1,4 @@
-package golden_ratio.darkzek.com.formula;
+package com.darkzek.goldenratio.formula;
 
 public class Expression {
     String expr;

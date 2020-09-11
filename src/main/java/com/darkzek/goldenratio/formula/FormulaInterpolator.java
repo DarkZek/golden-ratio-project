@@ -1,15 +1,15 @@
-package golden_ratio.darkzek.com.formula;
+package com.darkzek.goldenratio.formula;
 
-import golden_ratio.darkzek.com.Helper;
-import golden_ratio.darkzek.com.Settings;
-import golden_ratio.darkzek.com.ui.Controller;
-import golden_ratio.darkzek.com.ui.Drawing;
+import com.darkzek.goldenratio.Helper;
+import com.darkzek.goldenratio.Settings;
+import com.darkzek.goldenratio.ui.Controller;
+import com.darkzek.goldenratio.ui.Drawing;
 import javafx.application.Platform;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static golden_ratio.darkzek.com.Helper.lerp;
+import static com.darkzek.goldenratio.Helper.lerp;
 
 /**
  * The formula interpolator is the seperate thread that animates the graph. It takes the current

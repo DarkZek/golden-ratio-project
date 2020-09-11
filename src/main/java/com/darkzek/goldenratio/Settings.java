@@ -1,7 +1,7 @@
-package golden_ratio.darkzek.com;
+package com.darkzek.goldenratio;
 
-import golden_ratio.darkzek.com.formula.Expression;
-import golden_ratio.darkzek.com.formula.RotationType;
+import com.darkzek.goldenratio.formula.Expression;
+import com.darkzek.goldenratio.formula.RotationType;
 import javafx.scene.paint.Color;
 
 import java.io.File;
@@ -12,7 +12,7 @@ import java.nio.file.Path;
 
 /**
  * This is the settings class that is used by the formula class to store most of the formula
- * parameters It also features loading and saving function to make it persistant between restarts
+ * parameters It also features loading and saving function to make it persistent between restarts
  */
 public class Settings implements Cloneable {
     public Expression rotationPerPoint = new Expression(0.115);

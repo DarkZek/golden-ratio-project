@@ -1,31 +1,28 @@
-package golden_ratio.darkzek.com.ui;
+package com.darkzek.goldenratio.ui;
 
-import golden_ratio.darkzek.com.Settings;
-import golden_ratio.darkzek.com.formula.Expression;
-import golden_ratio.darkzek.com.formula.FormulaInterpolator;
-import golden_ratio.darkzek.com.formula.RotationType;
+import com.darkzek.goldenratio.Settings;
+import com.darkzek.goldenratio.formula.Expression;
+import com.darkzek.goldenratio.formula.FormulaInterpolator;
+import com.darkzek.goldenratio.formula.RotationType;
 import javafx.beans.value.ChangeListener;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
-import javax.imageio.ImageIO;
 import java.io.File;
-import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
-import static golden_ratio.darkzek.com.Helper.*;
+import static com.darkzek.goldenratio.Helper.clamp;
+import static com.darkzek.goldenratio.Helper.clampInt;
+
+//import javafx.embed.swing.SwingFXUtils;
+//import javafx.swing.SwingFXUtils;
 
 public class Controller {
 
@@ -122,7 +119,7 @@ public class Controller {
                     // Tell the interpolator to render the changes made above
                     interpolator.interpolating = true;
 
-                    // If the expression was invalid, set it to the expression it was changed to.
+                    // Red outline if invalid
                     if (rotationPerPoint.isInvalid()) {
                         rotation_per_step_field.setBorder(
                                 new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, new CornerRadii(5.0), BorderWidths.DEFAULT)));
@@ -254,17 +251,17 @@ public class Controller {
                         WritableImage wi =
                                 new WritableImage(
                                         (int) canvas.getWidth(), (int) canvas.getHeight());
-                        try {
-                            SnapshotParameters sp = new SnapshotParameters();
-                            sp.setFill(Color.TRANSPARENT);
-
-                            ImageIO.write(
-                                    SwingFXUtils.fromFXImage(canvas.snapshot(sp, wi), null),
-                                    "png",
-                                    file);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+//                        try {
+//                            SnapshotParameters sp = new SnapshotParameters();
+//                            sp.setFill(Color.TRANSPARENT);
+//
+//                            ImageIO.write(
+//                                    SwingFXUtils.fromFXImage(canvas.snapshot(sp, wi), null),
+//                                    "png",
+//                                    file);
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
                     }
                 });
 

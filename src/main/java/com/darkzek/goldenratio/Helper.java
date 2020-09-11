@@ -1,4 +1,4 @@
-package golden_ratio.darkzek.com;
+package com.darkzek.goldenratio;
 
 import javafx.scene.paint.Color;
 

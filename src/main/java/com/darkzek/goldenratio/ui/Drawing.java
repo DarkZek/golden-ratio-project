@@ -1,8 +1,8 @@
-package golden_ratio.darkzek.com.ui;
+package com.darkzek.goldenratio.ui;
 
-import golden_ratio.darkzek.com.Settings;
-import golden_ratio.darkzek.com.formula.FormulaGenerator;
-import golden_ratio.darkzek.com.formula.Point;
+import com.darkzek.goldenratio.Settings;
+import com.darkzek.goldenratio.formula.FormulaGenerator;
+import com.darkzek.goldenratio.formula.Point;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 

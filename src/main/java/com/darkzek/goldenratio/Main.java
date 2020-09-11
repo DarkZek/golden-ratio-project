@@ -1,6 +1,6 @@
-package golden_ratio.darkzek.com;
+package com.darkzek.goldenratio;
 
-import golden_ratio.darkzek.com.ui.Controller;
+import com.darkzek.goldenratio.ui.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +19,7 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        loader = new FXMLLoader(getClass().getResource("ui/window.fxml"));
+        loader = new FXMLLoader(getClass().getResource("/window.fxml"));
 
         Parent root = loader.load();
         primaryStage.setTitle("Golden Ratio Viewer");
