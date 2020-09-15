@@ -6,14 +6,24 @@ import com.darkzek.goldenratio.formula.FormulaInterpolator;
 import com.darkzek.goldenratio.formula.RotationType;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
@@ -251,17 +261,17 @@ public class Controller {
                         WritableImage wi =
                                 new WritableImage(
                                         (int) canvas.getWidth(), (int) canvas.getHeight());
-//                        try {
-//                            SnapshotParameters sp = new SnapshotParameters();
-//                            sp.setFill(Color.TRANSPARENT);
-//
-//                            ImageIO.write(
-//                                    SwingFXUtils.fromFXImage(canvas.snapshot(sp, wi), null),
-//                                    "png",
-//                                    file);
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
+                        try {
+                            SnapshotParameters sp = new SnapshotParameters();
+                            sp.setFill(Color.TRANSPARENT);
+
+                            ImageIO.write(
+                                    convertToFxImage(canvas.snapshot(sp, wi)),
+                                    "png",
+                                    file);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
 
@@ -295,4 +305,24 @@ public class Controller {
         // Stop the interpolator thread
         interpolator.drop();
     }
+
+    private BufferedImage convertToFxImage(Image image) {
+        BufferedImage wr = new BufferedImage((int) image.getWidth(), (int) image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        PixelReader reader = image.getPixelReader();
+
+        Graphics gr = wr.getGraphics();
+        for (int x = 0; x < image.getWidth(); x++) {
+            for (int y = 0; y < image.getHeight(); y++) {
+                gr.setColor(convertColour(reader.getColor(x, y)));
+                gr.fillRect(x, y, 1, 1);
+            }
+        }
+
+        return wr;
+    }
+
+    private java.awt.Color convertColour(javafx.scene.paint.Color in) {
+        return new java.awt.Color((float) in.getRed(), (float) in.getGreen(), (float) in.getBlue(), (float) in.getOpacity());
+    }
 }
+
